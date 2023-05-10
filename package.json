@@ -21,7 +21,9 @@
     "prettier": "^2.8.8",
     "prettier-config-standard": "^5.0.0",
     "prettier-plugin-astro": "^0.8.0",
-    "unocss": "^0.51.12"
+    "typescript": "^5.0.4",
+    "unocss": "^0.51.12",
+    "vite": "^4.3.5"
   },
   "dependencies": {
     "cypress": "^12.12.0"
