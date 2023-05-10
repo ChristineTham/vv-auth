@@ -8,7 +8,7 @@ import full_screen_image from '../assets/full_screen.jpg'
 import footer_cta_image from '../assets/cta.jpg'
 
 const blogs = await getCollection('blog')
-const sortedBlogs = blogs.sort((a, b) => a.date - b.date)
+const sortedBlogs = blogs.sort((a, b) => +a.data.date - +b.data.date)
 const categories = await getCollection('category')
 
 const title = 'world travel and photography'
