@@ -1,74 +1,177 @@
 ---
-import Layout from '../components/Layout.astro';
-import FeedbackForm from '../components/FeedbackForm.astro';
+import { getCollection } from 'astro:content'
+import { Image } from 'astro:assets'
+import Layout from '../layouts/default.astro'
+
+import image from '../assets/titleimage.jpg'
+import full_screen_image from '../assets/full_screen.jpg'
+import footer_cta_image from '../assets/cta.jpg'
+
+const blogs = await getCollection('blog')
+const sortedBlogs = blogs.sort((a, b) => a.date - b.date)
+const categories = await getCollection('category')
+
+const title = 'world travel and photography'
+const button_text = 'Read our articles'
+const button_link = '/blog/'
+const link_one = '/pages/about-us'
+const link_one_text = 'Find out more'
+const link_two = '/contact'
+const link_two_text = 'Get in touch'
+const cta_title = 'We love to travel'
+const cta_description =
+  'Explore the world through photography. We are passionate photographers and world travellers and this site showcases our work. Become a member / supporter and access additional features.'
+const footer_cta_title = 'Become a member!'
+const footer_cta_description =
+  'Join our community and become a member or site supporter!'
+const footer_cta_button_text = 'Find out more'
+const footer_cta_button_link = '/pages/about-us'
 ---
 
-<Layout title="Astro Toolbox">
-  <main>
-    <div class="header">
-      <div class="logo">
-        <img
-          src="https://user-images.githubusercontent.com/43764894/223557634-f62606c5-bdf9-476c-9264-0d3728189962.png"
+<Layout>
+  <div class="-mt-24 relative w-full py-12 px-12 bg-yellow-900">
+    <div class="relative z-10 text-center py-24 md:py-48">
+      <h1
+        class="text-white text-center text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-display font-bold mb-12">
+        {title}
+      </h1>
+      <a
+        href={button_link}
+        class="inline-block bg-yellow-800 text-white uppercase text-sm tracking-widest font-heading px-8 py-4"
+        >{button_text}</a
+      >
+    </div>
+
+    <div
+      class="relative z-10 mx-auto max-w-4xl flex justify-between uppercase text-white font-heading tracking-widest text-sm">
+      <a href={link_one} class="border-b border-white">{link_one_text}</a>
+      <a href={link_two} class="border-b border-white">{link_two_text}</a>
+    </div>
+
+    <Image
+      src={image}
+      alt="cover"
+      class="w-full h-full absolute inset-0 object-cover opacity-70"
+    />
+  </div>
+
+  {
+    sortedBlogs.slice(0, 1).map((post) => (
+      <div class="grid grid-cols-1 md:grid-cols-2">
+        <div class="bg-white p-12 md:p-24 flex justify-end items-center">
+          <a href={'/blog/' + post.slug}>
+            <img src={post.data.image} class="w-full max-w-md" />
+          </a>
+        </div>
+
+        <div class="bg-gray-100 p-12 md:p-24 flex justify-start items-center">
+          <div class="max-w-md">
+            <div class="w-24 h-2 bg-yellow-800 mb-4" />
+            <h2 class="font-display font-bold text-2xl md:text-3xl lg:text-4xl mb-6">
+              {post.data.title}
+            </h2>
+            <p class="font-light text-gray-600 text-sm md:text-base mb-6 leading-relaxed">
+              {post.data.description}
+            </p>
+            <a
+              href="{{ post.url }}"
+              class="inline-block border-2 border-yellow-800 font-light text-yellow-800 text-sm uppercase tracking-widest py-3 px-8 hover:bg-yellow-800 hover:text-white">
+              Read more
+            </a>
+          </div>
+        </div>
+      </div>
+    ))
+  }
+
+  {
+    full_screen_image && (
+      <Image src={full_screen_image} class="w-full h-screen object-cover" alt="Full Screen"/>
+    )
+  }
+
+  {
+    cta_title && (
+      <div class="max-w-xl mx-auto text-center py-24 md:py-32">
+        <div class="w-24 h-2 bg-yellow-800 mb-4 mx-auto" />
+        <h2 class="font-display font-bold text-3xl md:text-4xl lg:text-5xl mb-6">
+          {cta_title}
+        </h2>
+        <p class="font-light text-gray-600 mb-6 leading-relaxed">
+          {cta_description}
+        </p>
+      </div>
+    )
+  }
+
+  <div class="flex flex-wrap bg-black">
+    {
+      categories.slice(0, 3).map((category) => (
+        <a
+          href={'/categories/' + category.slug}
+          class="bg-black relative w-full md:w-auto md:flex-1 flex items-center justify-center h-72 font-heading text-white uppercase tracking-widest hover:opacity-75">
+          <div class="relative z-10">{category.data.title}</div>
+          <img
+            src={category.data.image}
+            class="absolute inset-0 w-full h-full object-cover opacity-50"
+          />
+        </a>
+      ))
+    }
+  </div>
+
+  {
+    sortedBlogs.slice(1, 2).map((post) => (
+      <div class="grid grid-cols-1 md:grid-cols-2">
+        <div class="bg-white p-12 md:p-24 flex justify-start items-center">
+          <a href={'/blog/' + post.slug}>
+            <img src={post.data.image} class="w-full max-w-md" />
+          </a>
+        </div>
+
+        <div class="md:order-first bg-gray-100 p-12 md:p-24 flex justify-end items-center">
+          <div class="max-w-md">
+            <div class="w-24 h-2 bg-yellow-800 mb-4" />
+            <h2 class="font-display font-bold text-2xl md:text-3xl lg:text-4xl mb-6">
+              {post.data.title}
+            </h2>
+            <p class="font-light text-gray-600 text-sm md:text-base mb-6 leading-relaxed">
+              {post.data.description}
+            </p>
+            <a
+              href="{{ post.url }}"
+              class="inline-block border-2 border-yellow-800 font-light text-yellow-800 text-sm uppercase tracking-widest py-3 px-8 hover:bg-yellow-800 hover:text-white">
+              Read more
+            </a>
+          </div>
+        </div>
+      </div>
+    ))
+  }
+
+  {
+    footer_cta_image && (
+      <div class="relative w-full py-12 px-12">
+        <div class="relative z-10 text-center py-12 md:py-24">
+          <h1 class="text-white text-center text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-display font-bold mb-6">
+            {footer_cta_title}
+          </h1>
+          <p class="text-white mb-10 text-base md:text-lg font-bold">
+            {footer_cta_description}
+          </p>
+          <a
+            href={footer_cta_button_link}
+            class="inline-block bg-yellow-800 text-white uppercase text-sm tracking-widest font-heading px-8 py-4">
+            {footer_cta_button_text}
+          </a>
+        </div>
+
+        <Image
+          src={footer_cta_image}
+          class="w-full h-full absolute inset-0 object-cover"
+          alt="CTA"
         />
       </div>
-    </div>
-    <div class="intro">
-      <p>
-        Hi 👋! This template gives you an
-        <a href="https://astro.build/">Astro</a> app with the scaffolding for
-        <a href="https://ntl.fyi/3upc4Qo"
-          >Netlify Functions</a
-        >, <a href="https://ntl.fyi/3bICRk6">Forms</a>, and
-      <a href="https://ntl.fyi/3PcY8RH">Redirects</a>. Our
-      aim was to give you the code you would need to hit the ground running
-      with a few fun features.
-    </p>
-
-    <p>
-      You can find the code for this project on GitHub at
-      <a href="https://github.com/netlify-templates/astro-toolbox"
-        >https://github.com/netlify-templates/astro-toolbox</a
-      >! Happy coding!
-    </p>
-    </div>
-    <FeedbackForm />
-    <a class="jokes-link" href="/api/joke">
-    <h3>
-      Click here for function-loaded jokes!
-    </h3>
-    </a>
-  </main>
+    )
+  }
 </Layout>
-
-<style>
-  :root {
-    text-align: center;
-  }
-  .logo img {
-    padding: 30px 0;
-    width: 100%;
-  }
-
-  main {
-    padding: 2rem 20px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    margin: 0 auto;
-    max-width: 60ch;
-    align-items: center;
-  } 
-
-  footer {
-    width: 100%;
-    height: 100px;
-    border-top: 1px solid #eaeaea;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-
-  footer img {
-    width: 20px;
-  }
-</style>

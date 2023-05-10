@@ -1,5 +1,5 @@
 exports.getPaymentMethods = () => [
-  'card',
+  'card'
   // 'alipay',
   // 'ideal', // EUR only
   // 'fpx',
@@ -11,7 +11,7 @@ exports.getPaymentMethods = () => [
   // 'sofort', // EUR only
   // // 'sepa_debit',
   // 'grabpay',
-];
+]
 
 exports.getShippingCountries = () => [
   'AC',
@@ -250,5 +250,5 @@ exports.getShippingCountries = () => [
   'ZA',
   'ZM',
   'ZW',
-  'ZZ',
-];
+  'ZZ'
+]

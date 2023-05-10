@@ -1,8 +1,8 @@
-# Astro Toolbox Template  
+# Astro Toolbox Template
 
 ![Netlify + Astro](https://user-images.githubusercontent.com/43764894/223557634-f62606c5-bdf9-476c-9264-0d3728189962.png)
 
-This is an [Astro](https://astro.build) project bootstrapped from the Astro CLI. It is a reference on how to integrate commonly used features within [Netlify](https://netlify.com) for Astro. 
+This is an [Astro](https://astro.build) project bootstrapped from the Astro CLI. It is a reference on how to integrate commonly used features within [Netlify](https://netlify.com) for Astro.
 
 [![Deploy to Netlify Button](https://www.netlify.com/img/deploy/button.svg)](https://app.netlify.com/start/deploy?repository=https://github.com/netlify-templates/astro-toolbox?utm_campaign=template-team&utm_source=dtn-button&utm_medium=dtn-button&utm_term=astro-tt-dtn-button&utm_content=astro-tt-dtn-button)
 
@@ -60,36 +60,36 @@ netlify dev
 And now your project should be running on <http://localhost:8888>.
 
 ## Deploy to Netlify
+
 ### Deploying using the Netlify CLI
 
- #### 1. Cloning + Install Packages
+#### 1. Cloning + Install Packages
 
-  - Clone this repo with one of these options:
+- Clone this repo with one of these options:
 
-    - Click the 'Use this template' button at the top of the page
-    - Or via the command line `git clone https://github.com/netlify-templates/astro-toolbox`
+  - Click the 'Use this template' button at the top of the page
+  - Or via the command line `git clone https://github.com/netlify-templates/astro-toolbox`
 
-  - Then install the necessary packages and run the project locally to make sure everything works.
+- Then install the necessary packages and run the project locally to make sure everything works.
 
-    ```bash
-    npm install
-    npm run dev
-    ```
+  ```bash
+  npm install
+  npm run dev
+  ```
 
-  > Alternatively, you can run this locally with [the Netlify CLI](https://docs.netlify.com/cli/get-started/)'s by running the `netlify dev` command for more options like receiving a live preview to share (`netlify dev --live`) and the ability to test [Netlify Functions](https://www.netlify.com/products/functions) and [redirects](https://docs.netlify.com/routing/redirects/). 
+> Alternatively, you can run this locally with [the Netlify CLI](https://docs.netlify.com/cli/get-started/)'s by running the `netlify dev` command for more options like receiving a live preview to share (`netlify dev --live`) and the ability to test [Netlify Functions](https://www.netlify.com/products/functions) and [redirects](https://docs.netlify.com/routing/redirects/).
 
-  #### 2. Deploying
-  - Install the Netlify CLI globally `npm install netlify-cli -g`
-    
-  - Run `npm run build`
+#### 2. Deploying
 
-  - Then use the `netlify deploy` for a deploy preview link or `netlify deploy --prod` to deploy to production
+- Install the Netlify CLI globally `npm install netlify-cli -g`
+- Run `npm run build`
 
-  Here are a few other ways you can deploy this template:
-    
-  - Use the Netlify CLI's create from template command `netlify sites:create-template astro-toolbox` which will create a repo, Netlify project, and deploy it
-    
-  - If you want to utilize continuous deployment through GitHub webhooks, run the Netlify command `netlify init` to create a new project based on your repo or `netlify link` to connect your repo to an existing project
+- Then use the `netlify deploy` for a deploy preview link or `netlify deploy --prod` to deploy to production
+
+Here are a few other ways you can deploy this template:
+
+- Use the Netlify CLI's create from template command `netlify sites:create-template astro-toolbox` which will create a repo, Netlify project, and deploy it
+- If you want to utilize continuous deployment through GitHub webhooks, run the Netlify command `netlify init` to create a new project based on your repo or `netlify link` to connect your repo to an existing project
 
 ## Forms
 
@@ -145,7 +145,7 @@ For this to work we also need to add a `netlify-honeypot` attribute to the form 
 
 With Netlify, you can build out server-side code without having to setup and maintain a dedicated server. Inside of our default folder path, [`netlify/functions`](./netlify/functions) you can see an example of the format for JavaScript functions with the [`joke.js`](./netlify/functions/joke.js) file.
 
-The function format expects an `async` function named `handler` to be exported.*
+The function format expects an `async` function named `handler` to be exported.\*
 
 ```js
 export const handler = async () => {
@@ -153,7 +153,7 @@ export const handler = async () => {
 }
 ```
 
-* *Note: ESLint may report that the async is unnecessary if there is no `await` code within the function, but the `async` is required. Do not delete it.*
+- _Note: ESLint may report that the async is unnecessary if there is no `await` code within the function, but the `async` is required. Do not delete it._
 
 This will be the function that will be invoked whenever a client makes a request to the generated endpoints. The endpoint's format is followed as `/.netlify/functions/joke`. So whenever the site is deployed, if you go to `https://<site base url>/.netlify/functions/joke` you will see a random joke!
 
@@ -172,12 +172,12 @@ There is quite a bit you can do with these functions, so here are some additiona
 
 ## Redirects
 
-In the [`netlify.toml`](./netlify.toml) configuration file there is an example of how to implement redirects. Redirects can be used to do many things from redirecting Single Page Apps more predictably, redirecting based on country/language to leveraging On-Demand Builders for [Distributed Persistant Rendering](https://www.netlify.com/blog/2021/04/14/distributed-persistent-rendering-a-new-jamstack-approach-for-faster-builds/). 
+In the [`netlify.toml`](./netlify.toml) configuration file there is an example of how to implement redirects. Redirects can be used to do many things from redirecting Single Page Apps more predictably, redirecting based on country/language to leveraging On-Demand Builders for [Distributed Persistant Rendering](https://www.netlify.com/blog/2021/04/14/distributed-persistent-rendering-a-new-jamstack-approach-for-faster-builds/).
 
-In the example we'll be using redirects to have a shorter endpoint to Netlify functions. By default, you call a Netlify function when requesting a path like `https://yoursite.netlify.com/.netlify/functions/functionName`. Instead, we'll redirect all calls from a path including `/api` to call on the Netlify functions. So the path will be `https://yoursite.netlify.com/api/functionName`, a lot easier to remember too. 
-
+In the example we'll be using redirects to have a shorter endpoint to Netlify functions. By default, you call a Netlify function when requesting a path like `https://yoursite.netlify.com/.netlify/functions/functionName`. Instead, we'll redirect all calls from a path including `/api` to call on the Netlify functions. So the path will be `https://yoursite.netlify.com/api/functionName`, a lot easier to remember too.
 
 ### Example
+
 ```toml
 [[redirects]]
 from = "/api/*"
@@ -246,7 +246,6 @@ All commands are run from the root of the project, from a terminal:
 | `npm run dev`     | Starts local dev server at `localhost:3000`  |
 | `npm run build`   | Build your production site to `./dist/`      |
 | `npm run preview` | Preview your build locally, before deploying |
-
 
 ## Testing
 

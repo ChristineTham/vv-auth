@@ -1,0 +1,99 @@
+---
+import { Settings, NavItems } from '../config.ts'
+import { Image } from 'astro:assets'
+---
+
+<div class="h-24 z-50 relative container mx-auto px-6 grid grid-cols-3">
+  <div x-data="{showMenu: false}" class="flex items-center">
+    <!-- menu button -->
+    <button x-on:click="showMenu = true">
+      <svg
+        class="w-8 h-8 text-white"
+        fill="none"
+        stroke="currentColor"
+        viewBox="0 0 24 24"
+        xmlns="http://www.w3.org/2000/svg"
+        ><path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          d="M4 6h16M4 12h16M4 18h16"></path></svg
+      >
+    </button>
+
+    <div
+      x-show="showMenu"
+      class="fixed inset-0 w-full h-full bg-white z-50 text-yellow-900">
+      <div
+        class="container h-full mx-auto px-6 py-8 relative z-10 flex flex-col items-center justify-center text-2xl uppercase font-bold tracking-widest space-y-6">
+        <button
+          x-on:click="showMenu = false"
+          class="absolute top-0 left-0 mt-8 ml-6">
+          <svg
+            class="w-8 h-8"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+            xmlns="http://www.w3.org/2000/svg"
+            ><path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"
+            ></path></svg
+          >
+        </button>
+        {
+          NavItems.map((item) => (
+            <a
+              href={item.url}
+              class="inline-block border-b-4 border-transparent hover:border-yellow-900">
+              {item.text}
+            </a>
+          ))
+        }
+      </div>
+      <div class="absolute inset-0 w-full h-full bg-yellow-900 bg-opacity-20">
+      </div>
+    </div>
+  </div>
+
+  <div class="flex items-center justify-center">
+    <a href="/" class="text-white uppercase font-bold text-2xl tracking-widest">
+      <!-- logo -->
+      {
+        Settings.logo ? (
+          <Image
+            src={Settings.logo}
+            alt="Logo"
+            class="h-20 w-64 object-contain object-center"
+          />
+        ) : (
+          Settings.site_name
+        )
+      }
+    </a>
+  </div>
+
+  <div class="flex items-center justify-end">
+    <!-- cart button -->
+    <a href="/cart">
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        fill="none"
+        viewBox="0 0 24 24"
+        stroke-width="1.5"
+        stroke="currentColor"
+        class="w-8 h-8 text-white">
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          d="M15.75 10.5V6a3.75 3.75 0 10-7.5 0v4.5m11.356-1.993l1.263 12c.07.665-.45 1.243-1.119 1.243H4.25a1.125 1.125 0 01-1.12-1.243l1.264-12A1.125 1.125 0 015.513 7.5h12.974c.576 0 1.059.435 1.119 1.007zM8.625 10.5a.375.375 0 11-.75 0 .375.375 0 01.75 0zm7.5 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z"
+        ></path>
+      </svg>
+    </a>
+  </div>
+</div>
+
+<div class="w-full h-24 bg-yellow-900 bg-opacity-95 absolute top-0 left-0">
+</div>

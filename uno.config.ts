@@ -2,7 +2,9 @@
 import {
   defineConfig,
   presetWebFonts,
-  presetAttributify, presetTypography, presetUno
+  presetAttributify,
+  presetTypography,
+  presetUno
 } from 'unocss'
 
 export default defineConfig({
@@ -16,8 +18,8 @@ export default defineConfig({
         sans: ['Overpass'],
         display: ['Playfair Display'],
         heading: ['Fira Sans Condensed']
-      },
+      }
     }),
-    presetTypography(),
-  ],
+    presetTypography()
+  ]
 })
