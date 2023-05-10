@@ -13,9 +13,9 @@ export default defineConfig({
       provider: 'google', // default provider
       fonts: {
         // these will extend the default theme
-        sans: ['Overpass', 'sans-serif'],
-        display: ['Playfair Display', 'serif'],
-        heading: ['Fira Sans Condensed', 'serif']
+        sans: ['Overpass'],
+        display: ['Playfair Display'],
+        heading: ['Fira Sans Condensed']
       },
     }),
     presetTypography(),
