@@ -1,19 +1,16 @@
 ---
-import Layout from '../components/Layout.astro'
+import Layout from '../layouts/default.astro'
 ---
 
-<Layout title="Astro Toolbox">
-  <div class="container">
-    <main>
-      <h1>Submission Received!</h1>
-      <p>
-        Thank you for your feedback! Head back to the <a href="/">home page</a>.
-      </p>
-    </main>
+<Layout>
+  <div>
+    <div>
+      <div class="text-center py-12 mb-12 px-6">
+        <h1
+          class="text-3xl lg:text-4xl mb-6 font-display text-black leading-tight">
+          Thank you for submitting your message.
+        </h1>
+      </div>
+    </div>
   </div>
 </Layout>
-<style>
-  html {
-    margin: 0 30px;
-  }
-</style>
