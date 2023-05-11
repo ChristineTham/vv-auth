@@ -18,7 +18,7 @@ export const NavItems = [
   },
   {
     text: 'About',
-    url: '/pages/about-us'
+    url: '/about-us'
   },
   {
     text: 'Blog',

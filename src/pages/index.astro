@@ -8,13 +8,13 @@ import full_screen_image from '../assets/full_screen.jpg'
 import footer_cta_image from '../assets/cta.jpg'
 
 const blogs = await getCollection('blog')
-const sortedBlogs = blogs.sort((a, b) => +a.data.date - +b.data.date)
+const sortedBlogs = blogs.sort((a, b) => +b.data.date - +a.data.date)
 const categories = await getCollection('category')
 
 const title = 'world travel and photography'
 const button_text = 'Read our articles'
 const button_link = '/blog/'
-const link_one = '/pages/about-us'
+const link_one = '/about-us'
 const link_one_text = 'Find out more'
 const link_two = '/contact'
 const link_two_text = 'Get in touch'
