@@ -1,0 +1,51 @@
+backend:
+  # Use netlify identity as backend
+  name: git-gateway
+  branch: main
+media_folder: "public/images"
+public_folder: "/images"
+
+# Please run "npx netlify-cms-proxy-server" for local backend
+local_backend: true
+# publish_mode: editorial_workflow
+collections:
+  - label: "Blog"
+    name: "blog"
+    folder: "src/content/blog"
+    create: true
+    editor:
+      preview: true
+    fields:
+      - { label: "Title", name: "title", widget: "string" }
+      - { label: "Description", name: "description", widget: "string" }
+      - { label: "Image", name: "image", widget: "image" }
+      - { label: "Publish Date", name: "date", widget: "datetime" }
+      - label: "Category"
+        name: "category"
+        widget: "relation"
+        collection: "category"
+        search_fields: ["title"]
+        value_field: "title"
+        required: false
+        display_fields: ["title"]
+      - { label: "Body", name: "body", widget: "markdown" }
+  - label: "Categories"
+    name: "category"
+    folder: "src/content/category"
+    create: true
+    editor:
+      preview: false
+    fields:
+      - { label: "Title", name: "title", widget: "string" }
+      - { label: "Description", name: "description", widget: "string", required: false }
+      - { label: "Image", name: "image", widget: "image" }
+  - label: "Pages"
+    name: "page"
+    folder: "src/pages"
+    create: true
+    editor:
+      preview: true
+    fields:
+      - { label: "Title", name: "title", widget: "string" }
+      - { label: "Description", name: "description", widget: "string", required: false }
+      - { label: "Body", name: "body", widget: "markdown" }

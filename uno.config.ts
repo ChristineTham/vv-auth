@@ -1,6 +1,7 @@
 // uno.config.ts
 import {
   defineConfig,
+  presetIcons,
   presetWebFonts,
   presetAttributify,
   presetTypography,
@@ -10,16 +11,49 @@ import { presetForms } from '@julr/unocss-preset-forms'
 
 export default defineConfig({
   presets: [
+    presetIcons({
+      extraProperties: {
+        'display': 'inline-block',
+        'vertical-align': 'middle',
+        // ...
+      },
+    }),
     presetAttributify(), // required when using attributify mode
     presetUno(), // required
     presetForms(),
     presetWebFonts({
       provider: 'google', // default provider
       fonts: {
-        // these will extend the default theme
-        sans: ['Overpass'],
-        display: ['Playfair Display'],
-        heading: ['Fira Sans Condensed']
+        display: [
+          {
+            name: 'Playfair Display',
+            weights: ['100', '200', '300', '400', '500', '600', '700'],
+          },
+          {
+            name: 'serif',
+            provider: 'none',
+          },
+        ],
+        heading: [
+          {
+            name: 'Fira Sans Condensed',
+            weights: ['100', '200', '300', '400', '500', '600', '700'],
+          },
+          {
+            name: 'serif',
+            provider: 'none',
+          },
+        ],
+        sans: [
+          {
+            name: 'Overpass',
+            weights: ['100', '200', '300', '400', '500', '600', '700'],
+          },
+          {
+            name: 'sans-serif',
+            provider: 'none',
+          },
+        ],
       }
     }),
     presetTypography()
