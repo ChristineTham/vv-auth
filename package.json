@@ -24,13 +24,9 @@
     "prettier-config-standard": "^5.0.0",
     "prettier-plugin-astro": "^0.8.1",
     "typescript": "^5.0.4",
-    "unocss": "^0.51.12",
-    "vite": "^4.3.5"
+    "unocss": "^0.51.12"
   },
   "dependencies": {
-    "@julr/unocss-preset-forms": "^0.0.5",
-    "axios": "^1.4.0",
-    "collect.js": "^4.36.1",
-    "stripe": "^12.5.0"
+    "@julr/unocss-preset-forms": "^0.0.5"
   }
 }
