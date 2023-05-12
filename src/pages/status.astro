@@ -22,7 +22,7 @@ const description = ''
         const userstatus = document.getElementById("userstatus")
         const user = netlifyIdentity.currentUser()
         if (user) {
-          userstatus.innerHTML = user
+          userstatus.innerHTML = `Currently logged in: ${user.user_metadata.full_name} (${user.email})`
         }
       }
   </script>
