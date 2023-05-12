@@ -18,10 +18,12 @@ const description = ''
     <p id="userstatus">User not logged in.</p>
   </div>
   <script is:inline>
-    var userstatus = document.getElementById("userstatus")
-    const user = window.netlifyIdentity.currentUser()
-    if (user) {
-      userstatus.innerHTML = user
-    }
+      document.body.onload = function() {
+        const userstatus = document.getElementById("userstatus")
+        const user = netlifyIdentity.currentUser()
+        if (user) {
+          userstatus.innerHTML = user
+        }
+      }
   </script>
 </Layout>

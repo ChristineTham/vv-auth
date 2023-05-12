@@ -13,8 +13,8 @@ export const NavItems = [
     url: '/'
   },
   {
-    text: 'Products',
-    url: '/products'
+    text: 'Status',
+    url: '/status'
   },
   {
     text: 'About',
