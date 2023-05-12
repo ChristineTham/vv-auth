@@ -22,7 +22,12 @@ const { title, description } = Astro.props
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
     <link rel="manifest" href="/site.webmanifest" />
     <meta name="generator" content={Astro.generator} />
-    <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+    <!-- <script is:inline src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script> -->
+    <script>
+      import netlifyIdentity from 'netlify-identity-widget'
+
+      netlifyIdentity.init()
+    </script>
     <title>
       {title || Settings.site_name}
     </title>
