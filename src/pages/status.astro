@@ -1,0 +1,27 @@
+---
+import Layout from '../layouts/default.astro'
+
+const title = 'Status'
+const description = ''
+---
+
+<Layout {title} {description}>
+  <div class="text-center py-12 px-6 mt-12">
+    <h1 class="font-display font-bold text-5xl mb-6">{title}</h1>
+    <p class="max-w-lg mx-auto">{description}</p>
+  </div>
+
+  <div class="container mx-auto px-6 mb-12 prose prose-sm sm:prose lg:prose-lg">
+    <a class="my-2" href="/api/joke">
+      <p>Click here for function-loaded jokes!</p>
+    </a>
+    <p id="userstatus">User not logged in.</p>
+  </div>
+  <script is:inline>
+    var userstatus = document.getElementById("userstatus")
+    const user = window.netlifyIdentity.currentUser()
+    if (user) {
+      userstatus.innerHTML = user
+    }
+  </script>
+</Layout>
