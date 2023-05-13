@@ -27,9 +27,11 @@ const { title, description } = Astro.props
       import netlifyIdentity from 'netlify-identity-widget'
 
       declare global {
-        interface Window { netlifyIdentity: any; }
+        interface Window {
+          netlifyIdentity: any
+        }
       }
-      
+
       netlifyIdentity.init()
       window.netlifyIdentity = netlifyIdentity
     </script>

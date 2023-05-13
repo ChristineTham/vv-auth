@@ -2,8 +2,8 @@ backend:
   # Use netlify identity as backend
   name: git-gateway
   branch: main
-media_folder: "public/images"
-public_folder: "/images"
+media_folder: "src/assets/images"
+public_folder: "../../assets/images"
 
 # Please run "npx netlify-cms-proxy-server" for local backend
 local_backend: true
@@ -28,6 +28,7 @@ collections:
         value_field: "title"
         required: false
         display_fields: ["title"]
+      - { label: "Geo location", name: "geo", widget: "map" }
       - { label: "Body", name: "body", widget: "markdown" }
   - label: "Categories"
     name: "category"

@@ -74,7 +74,7 @@ const footer_cta_button_link = '/pages/about-us'
               {post.data.description}
             </p>
             <a
-              href="{{ post.url }}"
+              href={'/blog/' + post.slug}
               class="inline-block border-2 border-yellow-800 font-light text-yellow-800 text-sm uppercase tracking-widest py-3 px-8 hover:bg-yellow-800 hover:text-white">
               Read more
             </a>
@@ -143,7 +143,7 @@ const footer_cta_button_link = '/pages/about-us'
               {post.data.description}
             </p>
             <a
-              href="{{ post.url }}"
+              href={'/blog/' + post.slug}
               class="inline-block border-2 border-yellow-800 font-light text-yellow-800 text-sm uppercase tracking-widest py-3 px-8 hover:bg-yellow-800 hover:text-white">
               Read more
             </a>

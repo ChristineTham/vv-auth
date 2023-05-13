@@ -1,4 +1,5 @@
 # Visual Voyager Experimental Site with Authentication
+
 [![Netlify Status](https://api.netlify.com/api/v1/badges/b60a1d1f-7dfe-468b-984e-ca8affbbbc85/deploy-status)](https://app.netlify.com/sites/vv-auth/deploys)
 
 Playground for experimenting on an Astro version of Visual Voyager based on the following:
@@ -7,7 +8,6 @@ Playground for experimenting on an Astro version of Visual Voyager based on the 
 - unocss
 
 [![Deploy to Netlify Button](https://www.netlify.com/img/deploy/button.svg)](https://app.netlify.com/start/deploy?repository=https://github.com/ChristineTham/vv-auth?utm_campaign=template-team&utm_source=dtn-button&utm_medium=dtn-button&utm_term=astro-tt-dtn-button&utm_content=astro-tt-dtn-button)
-
 
 ## Table of Contents:
 
@@ -247,8 +247,8 @@ Inside the project, you'll see the following folders and files:
 
 All commands are run from the root of the project, from a terminal:
 
-| Command           | Action                                       |
-| :---------------- | :------------------------------------------- |
+| Command            | Action                                       |
+| :----------------- | :------------------------------------------- |
 | `pnpm install`     | Installs dependencies                        |
 | `pnpm run dev`     | Starts local dev server at `localhost:3000`  |
 | `pnpm run build`   | Build your production site to `./dist/`      |

@@ -13,10 +13,10 @@ export default defineConfig({
   presets: [
     presetIcons({
       extraProperties: {
-        'display': 'inline-block',
-        'vertical-align': 'middle',
+        display: 'inline-block',
+        'vertical-align': 'middle'
         // ...
-      },
+      }
     }),
     presetAttributify(), // required when using attributify mode
     presetUno(), // required
@@ -27,33 +27,33 @@ export default defineConfig({
         display: [
           {
             name: 'Playfair Display',
-            weights: ['100', '200', '300', '400', '500', '600', '700'],
+            weights: ['100', '200', '300', '400', '500', '600', '700']
           },
           {
             name: 'serif',
-            provider: 'none',
-          },
+            provider: 'none'
+          }
         ],
         heading: [
           {
             name: 'Fira Sans Condensed',
-            weights: ['100', '200', '300', '400', '500', '600', '700'],
+            weights: ['100', '200', '300', '400', '500', '600', '700']
           },
           {
             name: 'serif',
-            provider: 'none',
-          },
+            provider: 'none'
+          }
         ],
         sans: [
           {
             name: 'Overpass',
-            weights: ['100', '200', '300', '400', '500', '600', '700'],
+            weights: ['100', '200', '300', '400', '500', '600', '700']
           },
           {
             name: 'sans-serif',
-            provider: 'none',
-          },
-        ],
+            provider: 'none'
+          }
+        ]
       }
     }),
     presetTypography()
