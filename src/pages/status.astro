@@ -12,24 +12,20 @@ const description = ''
   </div>
 
   <div class="container mx-auto px-6 mb-12 prose prose-sm sm:prose lg:prose-lg">
-    <a class="my-2" href="/api/joke">
-      <p>Click here for function-loaded jokes!</p>
-    </a>
     <div class="user-info">
-      <button id="left">Log In</button>
-      <button id="right">Sign Up</button>
+      <button id="left" class="inline-block border-2 border-yellow-800 font-light text-yellow-800 text-sm uppercase tracking-widest py-3 px-8 hover:bg-yellow-800 hover:text-white">Log In</button>
+      <button id="right" class="inline-block border-2 border-yellow-800 font-light text-yellow-800 text-sm uppercase tracking-widest py-3 px-8 hover:bg-yellow-800 hover:text-white">Sign Up</button>
     </div>
     <p id="userstatus">User not logged in.</p>
   </div>
-  <script>
-    const userstatus = document.getElementById('userstatus')
+  <script is:inline>
     const button1 = document.getElementById('left')
     const button2 = document.getElementById('right')
 
     const login = () => netlifyIdentity.open('login')
     const signup = () => netlifyIdentity.open('signup')
 
-    // by default, add login and signup functionality
+    // by default, we want to add login and signup functionality
     button1.addEventListener('click', login)
     button2.addEventListener('click', signup)
 
@@ -40,11 +36,12 @@ const description = ''
       const b1 = button1.cloneNode(true)
       const b2 = button2.cloneNode(true)
 
+      const userstatus = document.getElementById('userstatus')
+      userstatus.innerHTML = `Currently logged in: ${user.user_metadata.full_name} (${user.email}) [${user.app_metadata.roles.join(', ')}]`
       // empty the user info div
       container.innerHTML = ''
 
       if (user) {
-        userstatus.innerText = `Currently logged in: ${user.user_metadata.full_name} (${user.email})`
         b1.innerText = 'Log Out'
         b1.addEventListener('click', () => {
           netlifyIdentity.logout()
@@ -53,6 +50,17 @@ const description = ''
         b2.innerText = 'Manage Subscription'
         b2.addEventListener('click', () => {
           // TODO handle subscription management
+          fetch('/.netlify/functions/create-manage-link', {
+            method: 'POST',
+            headers: {
+              Authorization: `Bearer ${user.token.access_token}`
+            }
+          })
+            .then((res) => res.json())
+            .then((link) => {
+              window.location.href = link
+            })
+            .catch((err) => console.error(err))
         })
       } else {
         // if no one is logged in, show login/signup options
@@ -67,7 +75,6 @@ const description = ''
       container.appendChild(b1)
       container.appendChild(b2)
     }
-
     const handleUserStateChange = (user) => {
       updateUserInfo(user)
     }

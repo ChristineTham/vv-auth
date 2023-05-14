@@ -67,7 +67,7 @@ const description =
                     clip-rule="evenodd"></path>
                 </svg>
                 <span class="text-base font-medium text-gray-900"
-                  >Receive email updates</span
+                  >Access member exclusive content</span
                 >
               </li>
 
@@ -105,7 +105,7 @@ const description =
             </ul>
 
             <button
-              id="signup"
+              id="member"
               class="inline-flex items-center justify-center w-full px-4 py-4 mt-8 font-semibold text-white transition-all duration-200 bg-gray-800 rounded-md hover:bg-gray-600 focus:bg-gray-600">
               Sign up</button
             >
@@ -151,7 +151,7 @@ const description =
                     clip-rule="evenodd"></path>
                 </svg>
                 <span class="text-base font-medium text-gray-900"
-                  >Receive email updates</span
+                  >Access member exclusive content</span
                 >
               </li>
 
@@ -183,13 +183,13 @@ const description =
                     clip-rule="evenodd"></path>
                 </svg>
                 <span class="text-base font-medium text-gray-900"
-                  >Discounts on products and events (future)</span
+                  >20% Discount on events and workshops</span
                 >
               </li>
             </ul>
 
             <button
-              id="join"
+              id="premium"
               class="inline-flex items-center justify-center w-full px-4 py-4 mt-8 font-semibold text-white transition-all duration-200 rounded-md bg-gradient-to-r from-fuchsia-600 to-blue-600 hover:opacity-80 focus:opacity-80">
               Join
             </button>
@@ -201,56 +201,50 @@ const description =
     </div>
   </section>
   <script is:inline>
-    const button1 = document.getElementById('signup')
-    const button2 = document.getElementById('join')
+    const button1 = document.getElementById('member')
+    const button2 = document.getElementById('premium')
 
     const login = () => netlifyIdentity.open('login')
     const signup = () => netlifyIdentity.open('signup')
+    const member = () => {
+      const user = netlifyIdentity.currentUser()
 
-    // by default, add login and signup functionality
-    button1.addEventListener('click', signup)
-    button2.addEventListener('click', login)
-
-    const updateUserInfo = (user) => {
-      const container = document.querySelector('.user-info')
-
-      // cloning the buttons removes existing event listeners
-      const b1 = button1.cloneNode(true)
-      const b2 = button2.cloneNode(true)
-
-      // empty the user info div
-      container.innerHTML = ''
-
-      if (user) {
-        b1.innerText = 'Log Out'
-        b1.addEventListener('click', () => {
-          netlifyIdentity.logout()
-        })
-
-        b2.innerText = 'Manage Subscription'
-        b2.addEventListener('click', () => {
-          // TODO handle subscription management
-        })
-      } else {
-        // if no one is logged in, show login/signup options
-        b1.innerText = 'Log In'
-        b1.addEventListener('click', login)
-
-        b2.innerText = 'Sign Up'
-        b2.addEventListener('click', signup)
+      if (!user) {
+        netlifyIdentity.open('signup')
       }
-
-      // add the updated buttons back to the user info div
-      container.appendChild(b1)
-      container.appendChild(b2)
+      else {
+        fetch('/.netlify/functions/create-manage-link', {
+            method: 'POST',
+            headers: {
+              Authorization: `Bearer ${user.token.access_token}`
+            }
+          })
+            .then((res) => res.json())
+            .then((link) => {
+              window.location.href = link
+            })
+            .catch((err) => console.error(err))
+      }
     }
+    const premium = () => {
+      const user = netlifyIdentity.currentUser()
 
-    const handleUserStateChange = (user) => {
-      updateUserInfo(user)
+      if (!user) {
+        netlifyIdentity.open('login')
+      }
+      else {
+        fetch('/.netlify/functions/create-manage-link', {
+            method: 'POST',
+            headers: {
+              Authorization: `Bearer ${user.token.access_token}`
+            }
+          })
+            .then((res) => res.json())
+            .then((link) => {
+              window.location.href = link
+            })
+            .catch((err) => console.error(err))
+      }
     }
-
-    netlifyIdentity.on('init', handleUserStateChange)
-    netlifyIdentity.on('login', handleUserStateChange)
-    netlifyIdentity.on('logout', handleUserStateChange)
   </script>
 </Layout>

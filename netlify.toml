@@ -2,7 +2,6 @@
 [dev]
   framework = "astro"
   command = "pnpm run dev"
-  targetPort = 3000
 
 [build]
   command = "pnpm run build"
@@ -17,3 +16,10 @@
   to = "/.netlify/functions/:splat" # all function calls will go to this path
   status = 200 # ok code
   force = true # ensure to always redirect
+
+[[redirects]]
+  from = "/admin/*"
+  to = "/admin/:splat"
+  force = true
+  status = 200
+  conditions = {Role = ["editor", "admin"]}
