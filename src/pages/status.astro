@@ -15,15 +15,65 @@ const description = ''
     <a class="my-2" href="/api/joke">
       <p>Click here for function-loaded jokes!</p>
     </a>
+    <div class="user-info">
+      <button id="left">Log In</button>
+      <button id="right">Sign Up</button>
+    </div>
     <p id="userstatus">User not logged in.</p>
   </div>
-  <script is:inline>
-    document.body.onload = function () {
-      const userstatus = document.getElementById('userstatus')
-      const user = netlifyIdentity.currentUser()
+  <script>
+    const userstatus = document.getElementById('userstatus')
+    const button1 = document.getElementById('left')
+    const button2 = document.getElementById('right')
+
+    const login = () => netlifyIdentity.open('login')
+    const signup = () => netlifyIdentity.open('signup')
+
+    // by default, add login and signup functionality
+    button1.addEventListener('click', login)
+    button2.addEventListener('click', signup)
+
+    const updateUserInfo = (user) => {
+      const container = document.querySelector('.user-info')
+
+      // cloning the buttons removes existing event listeners
+      const b1 = button1.cloneNode(true)
+      const b2 = button2.cloneNode(true)
+
+      // empty the user info div
+      container.innerHTML = ''
+
       if (user) {
-        userstatus.innerHTML = `Currently logged in: ${user.user_metadata.full_name} (${user.email})`
+        userstatus.innerText = `Currently logged in: ${user.user_metadata.full_name} (${user.email})`
+        b1.innerText = 'Log Out'
+        b1.addEventListener('click', () => {
+          netlifyIdentity.logout()
+        })
+
+        b2.innerText = 'Manage Subscription'
+        b2.addEventListener('click', () => {
+          // TODO handle subscription management
+        })
+      } else {
+        // if no one is logged in, show login/signup options
+        b1.innerText = 'Log In'
+        b1.addEventListener('click', login)
+
+        b2.innerText = 'Sign Up'
+        b2.addEventListener('click', signup)
       }
+
+      // add the updated buttons back to the user info div
+      container.appendChild(b1)
+      container.appendChild(b2)
     }
+
+    const handleUserStateChange = (user) => {
+      updateUserInfo(user)
+    }
+
+    netlifyIdentity.on('init', handleUserStateChange)
+    netlifyIdentity.on('login', handleUserStateChange)
+    netlifyIdentity.on('logout', handleUserStateChange)
   </script>
 </Layout>

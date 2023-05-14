@@ -5,9 +5,9 @@
   "scripts": {
     "dev": "astro dev",
     "start": "astro dev",
-    "build": "astro build",
+    "build": "astro build; prettier --write  \"dist/**/*.{js,html,css}\"",
     "preview": "astro preview",
-    "lint": "npm run lint:prettier && npm run lint:eslint",
+    "lint": "pnpm run lint:prettier && pnpm run lint:eslint",
     "lint:prettier": "prettier --write  \"**/*.{js,jsx,ts,tsx,md,mdx,astro}\"",
     "lint:eslint": "eslint --fix \"src/**/*.{js,ts,jsx,tsx,astro}\""
   },
@@ -34,6 +34,7 @@
     "@julr/unocss-preset-forms": "^0.0.5",
     "@netlify/functions": "^1.6.0",
     "alpinejs": "^3.12.1",
-    "netlify-identity-widget": "^1.9.2"
+    "netlify-identity-widget": "^1.9.2",
+    "stripe": "^12.5.0"
   }
 }

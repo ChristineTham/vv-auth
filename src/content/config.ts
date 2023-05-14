@@ -9,14 +9,7 @@ const blogCollection = defineCollection({
     image: z.string().optional(),
     category: z.string(),
     date: z.date(),
-    geo: z.object({
-      type: z.literal('Feature'),
-      properties: z.object({}),
-      geometry: z.object({
-        coordinates: z.number().array(),
-        type: z.literal('Point')
-      })
-    }).optional()
+    geo: z.string().optional()
   })
 })
 

@@ -46,7 +46,7 @@ export default defineConfig({
         ],
         sans: [
           {
-            name: 'Overpass',
+            name: 'Open Sans',
             weights: ['100', '200', '300', '400', '500', '600', '700']
           },
           {
