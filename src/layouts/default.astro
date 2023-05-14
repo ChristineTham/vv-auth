@@ -32,7 +32,7 @@ const { title, description } = Astro.props
         }
       }
 
-      netlifyIdentity.init()
+      netlifyIdentity.init(user => console.log(user))
       window.netlifyIdentity = netlifyIdentity
     </script>
     <title>

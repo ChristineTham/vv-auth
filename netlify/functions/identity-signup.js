@@ -1,5 +1,11 @@
 const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY)
-const { faunaFetch } = require('./utils/fauna')
+const faunadb = require('faunadb')
+const q = faunadb.query
+
+// Instantiate a client
+const client = new faunadb.Client({
+  secret: process.env.FAUNA_SERVER_KEY
+})
 
 exports.handler = async (event) => {
   const { user } = JSON.parse(event.body)
@@ -14,20 +20,15 @@ exports.handler = async (event) => {
   })
 
   // store the Netlify and Stripe IDs in Fauna
-  await faunaFetch({
-    query: `
-      mutation ($netlifyID: ID!, $stripeID: ID!) {
-        createUser(data: { netlifyID: $netlifyID, stripeID: $stripeID }) {
-          netlifyID
-          stripeID
-        }
-      }
-    `,
-    variables: {
-      netlifyID: user.id,
-      stripeID: customer.id
-    }
-  })
+  await client.query(
+    q.Create(
+      q.Collection('User'),
+      { data: {
+        netlifyID: user.id,
+        stripeID: customer.id
+      } },
+    )
+  )
 
   return {
     statusCode: 200,

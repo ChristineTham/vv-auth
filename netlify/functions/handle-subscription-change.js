@@ -1,6 +1,12 @@
 const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY)
 const fetch = require('node-fetch')
-const { faunaFetch } = require('./utils/fauna')
+const faunadb = require('faunadb')
+const q = faunadb.query
+
+// Instantiate a client
+const client = new faunadb.Client({
+  secret: process.env.FAUNA_SERVER_KEY
+})
 
 exports.handler = async ({ body, headers }, context) => {
   try {
@@ -16,22 +22,15 @@ exports.handler = async ({ body, headers }, context) => {
 
     const subscription = stripeEvent.data.object
 
-    const result = await faunaFetch({
-      query: `
-          query ($stripeID: ID!) {
-            getUserByStripeID(stripeID: $stripeID) {
-              netlifyID
-            }
-          }
-        `,
-      variables: {
-        stripeID: subscription.customer
-      }
-    })
+    const result = await client.query(
+      q.Get(
+        q.Match(q.Index('getUserByStripeID'), subscription.customer)
+      )
+    )
+  
+    const { netlifyID } = result.data
 
-    const { netlifyID } = result.data.getUserByStripeID
-
-    // take the lsdy word of the plan name and use it as the role
+    // take the last word of the plan name and use it as the role
     const plan = subscription.items.data[0].plan.nickname
     const role = plan.split(' ').reverse()[0].toLowerCase()
 

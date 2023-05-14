@@ -18,7 +18,7 @@ const description = ''
     </div>
     <p id="userstatus">User not logged in.</p>
   </div>
-  <script is:inline>
+  <script>
       document.body.onload = function() {
         const userstatus = document.getElementById("userstatus")
         const user = netlifyIdentity.currentUser()
