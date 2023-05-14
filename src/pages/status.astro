@@ -19,6 +19,14 @@ const description = ''
     <p id="userstatus">User not logged in.</p>
   </div>
   <script is:inline>
+      document.body.onload = function() {
+        const userstatus = document.getElementById("userstatus")
+        const user = netlifyIdentity.currentUser()
+        if (user) {
+          userstatus.innerHTML = `Currently logged in: ${user.user_metadata.full_name} (${user.email}) [${user.app_metadata.roles.join(', ')}]`
+        }
+      }
+
     const button1 = document.getElementById('left')
     const button2 = document.getElementById('right')
 
@@ -35,9 +43,7 @@ const description = ''
       // cloning the buttons removes existing event listeners
       const b1 = button1.cloneNode(true)
       const b2 = button2.cloneNode(true)
-
-      const userstatus = document.getElementById('userstatus')
-      userstatus.innerHTML = `Currently logged in: ${user.user_metadata.full_name} (${user.email}) [${user.app_metadata.roles.join(', ')}]`
+`
       // empty the user info div
       container.innerHTML = ''
 
