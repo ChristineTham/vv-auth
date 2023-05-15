@@ -1,21 +1,11 @@
 import type { HandlerEvent } from '@netlify/functions'
 
 const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY)
-const faunadb = require('faunadb')
-const q = faunadb.query
-
-// Instantiate a client
-const client = new faunadb.Client({
-  secret: process.env.FAUNA_SERVER_KEY
-})
 
 exports.handler = async (event: HandlerEvent) => {
   const user = JSON.parse(event.body!)
-
-  const result = await client.query(
-    q.Get(q.Match(q.Index('getUserByNetlifyID'), user.id))
-  )
-  const { stripeID } = result.data
+  const roles = user.app_metadata.roles as string[]
+  const stripeID = roles[roles.findIndex(role => role.slice(0,7) == 'stripe:')].slice(7)
 
   const session = await stripe.checkout.sessions.create({
     customer: stripeID,
@@ -27,6 +17,9 @@ exports.handler = async (event: HandlerEvent) => {
         quantity: 1
       }
     ],
+    billing_address_collection: 'required',
+    automatic_tax: { enabled: true },
+    customer_update: { address: 'auto' },
     success_url: `${process.env.URL}/success`,
     cancel_url: `${process.env.URL}/membership`
   })

@@ -1,12 +1,5 @@
 const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY)
 const fetch = require('node-fetch')
-const faunadb = require('faunadb')
-const q = faunadb.query
-
-// Instantiate a client
-const client = new faunadb.Client({
-  secret: process.env.FAUNA_SERVER_KEY
-})
 
 exports.handler = async ({ body, headers }, context) => {
   try {
@@ -22,15 +15,11 @@ exports.handler = async ({ body, headers }, context) => {
 
     const subscription = stripeEvent.data.object
 
-    const result = await client.query(
-      q.Get(q.Match(q.Index('getUserByStripeID'), subscription.customer))
-    )
-
-    const { netlifyID } = result.data
+    const customer = await stripe.customers.retrieve(subscription.customer)
+    const netlifyID = customer.metadata.netlifyID
 
     // take the last word of the plan name and use it as the role
-    const plan = subscription.items.data[0].plan.nickname
-    const role = plan.split(' ').reverse()[0].toLowerCase()
+    const role = subscription.items.data[0].price.nickname
 
     // send a call to the Netlify Identity admin API to update the user role
     const { identity } = context.clientContext
@@ -42,7 +31,7 @@ exports.handler = async ({ body, headers }, context) => {
       },
       body: JSON.stringify({
         app_metadata: {
-          roles: [role]
+          roles: [role, 'stripe:' + subscription.customer]
         }
       })
     })
