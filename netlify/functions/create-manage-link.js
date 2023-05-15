@@ -12,7 +12,7 @@ exports.handler = async (_event, context) => {
 
   const result = await client.query(
     q.Get(
-      q.Match(q.Index('getUserByNetlifyID'), user.sub)
+      q.Match(q.Index('getUserByNetlifyID'), user.id)
     )
   )
 

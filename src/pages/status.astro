@@ -13,80 +13,41 @@ const description = ''
 
   <div class="container mx-auto px-6 mb-12 prose prose-sm sm:prose lg:prose-lg">
     <div class="user-info">
-      <button id="left" class="inline-block border-2 border-yellow-800 font-light text-yellow-800 text-sm uppercase tracking-widest py-3 px-8 hover:bg-yellow-800 hover:text-white">Log In</button>
-      <button id="right" class="inline-block border-2 border-yellow-800 font-light text-yellow-800 text-sm uppercase tracking-widest py-3 px-8 hover:bg-yellow-800 hover:text-white">Sign Up</button>
+      <button id="manage" class="inline-block border-2 border-yellow-800 font-light text-yellow-800 text-sm uppercase tracking-widest py-3 px-8 hover:bg-yellow-800 hover:text-white">Manage Subscription</button>
     </div>
     <p id="userstatus">User not logged in.</p>
   </div>
-  <script>
+  <script is:inline>
       document.body.onload = function() {
         const userstatus = document.getElementById("userstatus")
-        const user = netlifyIdentity.currentUser()
-        if (user) {
-          userstatus.innerHTML = `Currently logged in: ${user.user_metadata.full_name} (${user.email}) [${user.app_metadata.roles.join(', ')}]`
+        if (window.netlifyUser) {
+          userstatus.innerHTML = `Currently logged in: ${window.netlifyUser.user_metadata.full_name} (${window.netlifyUser.email}) [${window.netlifyUser.app_metadata.roles.join(', ')}]`
         }
-      }
 
-    const button1 = document.getElementById('left')
-    const button2 = document.getElementById('right')
-
-    const login = () => netlifyIdentity.open('login')
-    const signup = () => netlifyIdentity.open('signup')
-
-    // by default, we want to add login and signup functionality
-    button1.addEventListener('click', login)
-    button2.addEventListener('click', signup)
-
-    const updateUserInfo = (user) => {
-      const container = document.querySelector('.user-info')
-
-      // cloning the buttons removes existing event listeners
-      const b1 = button1.cloneNode(true)
-      const b2 = button2.cloneNode(true)
-
-      // empty the user info div
-      container.innerHTML = ''
-
-      if (user) {
-        b1.innerText = 'Log Out'
-        b1.addEventListener('click', () => {
-          netlifyIdentity.logout()
-        })
-
-        b2.innerText = 'Manage Subscription'
-        b2.addEventListener('click', () => {
-          // TODO handle subscription management
-          fetch('/.netlify/functions/create-manage-link', {
-            method: 'POST',
-            headers: {
-              Authorization: `Bearer ${user.token.access_token}`
-            }
-          })
-            .then((res) => res.json())
-            .then((link) => {
-              window.location.href = link
+        const manage = document.getElementById('manage')
+        manage.addEventListener('click', () => {
+          if (!window.netlifyUser) {
+            window.netlifyIdentity.open()
+          }
+    
+          if (window.netlifyUser) {
+            fetch('/.netlify/functions/create-manage-link', {
+              method: 'POST',
+              headers: {
+                Authorization: `Bearer ${window.netlifyUser.token.access_token}`
+              }
             })
-            .catch((err) => console.error(err))
+              .then((res) => res.json())
+              .then((link) => {
+                window.location.href = link
+              })
+              .catch((err) => console.error(err))
+          }
+          else {
+            console.log("Need to login first")
+          }
         })
-      } else {
-        // if no one is logged in, show login/signup options
-        b1.innerText = 'Log In'
-        b1.addEventListener('click', login)
-
-        b2.innerText = 'Sign Up'
-        b2.addEventListener('click', signup)
       }
 
-      // add the updated buttons back to the user info div
-      container.appendChild(b1)
-      container.appendChild(b2)
-    }
-    const handleUserStateChange = (user) => {
-      updateUserInfo(user)
-    }
-
-    netlifyIdentity.on('init', handleUserStateChange)
-    netlifyIdentity.on('login', handleUserStateChange)
-    netlifyIdentity.on('logout', handleUserStateChange)
   </script>
 </Layout>

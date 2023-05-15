@@ -29,11 +29,18 @@ const { title, description } = Astro.props
       declare global {
         interface Window {
           netlifyIdentity: any
+          netlifyUser: any
         }
       }
 
-      netlifyIdentity.init(user => console.log(user))
+      netlifyIdentity.on('init', user => {
+        window.netlifyUser = user
+        console.log(user)
+      })
+      netlifyIdentity.init()
       window.netlifyIdentity = netlifyIdentity
+      console.log(netlifyIdentity)
+
     </script>
     <title>
       {title || Settings.site_name}
