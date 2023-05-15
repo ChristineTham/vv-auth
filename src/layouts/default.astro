@@ -22,7 +22,20 @@ const { title, description } = Astro.props
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
     <link rel="manifest" href="/site.webmanifest" />
     <meta name="generator" content={Astro.generator} />
+    <style is:inline>
+      [x-cloak] { display: none !important; }
+    </style>
     <!-- <script is:inline src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script> -->
+
+    <title>
+      {title || Settings.site_name}
+    </title>
+    {description && <meta name="description" content={description} />}
+  </head>
+  <body class="font-sans text-gray-700 antialiased bg-white">
+    <Navbar />
+    <slot />
+    <Footer />
     <script>
       import netlifyIdentity from 'netlify-identity-widget'
 
@@ -40,15 +53,17 @@ const { title, description } = Astro.props
       netlifyIdentity.on('close', () => window.location.reload())
       netlifyIdentity.init()
       window.netlifyIdentity = netlifyIdentity
+      if (window.netlifyUser) {
+        const status = document.getElementById('status')
+        const manage = document.getElementById('manage')
+
+        status!.innerHTML = `${
+          window.netlifyUser.user_metadata.full_name
+        }<br />(${
+          window.netlifyUser.email
+        })`
+        manage!.innerText = "Manage membership"
+      }
     </script>
-    <title>
-      {title || Settings.site_name}
-    </title>
-    {description && <meta name="description" content={description} />}
-  </head>
-  <body class="font-sans text-gray-700 antialiased bg-white">
-    <Navbar />
-    <slot />
-    <Footer />
   </body>
 </html>

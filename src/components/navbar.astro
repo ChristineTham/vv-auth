@@ -1,6 +1,5 @@
 ---
 import { Settings, NavItems } from '../config'
-import { Image } from 'astro:assets'
 ---
 
 <div class="h-24 z-50 relative container mx-auto px-6 grid grid-cols-3">
@@ -12,6 +11,7 @@ import { Image } from 'astro:assets'
 
     <div
       x-show="showMenu"
+      x-cloak
       class="fixed inset-0 w-full h-full bg-white z-50 text-yellow-900">
       <div
         class="container h-full mx-auto px-6 py-8 relative z-10 flex flex-col items-center justify-center text-2xl uppercase font-bold tracking-widest space-y-6">
@@ -52,8 +52,8 @@ import { Image } from 'astro:assets'
       <!-- logo -->
       {
         Settings.logo ? (
-          <Image
-            src={Settings.logo}
+          <img
+            src={Settings.logo.src}
             alt="Logo"
             class="h-20 w-64 object-contain object-center"
           />

@@ -3,13 +3,36 @@ import { Settings, FooterMenu, Copyright } from '../config'
 ---
 
 <div
-  class="bg-gray-900 text-white text-opacity-40 font-semibold uppercase text-xs tracking-widest bg-opacity-80 px-12">
+  class="bg-gray-900 text-white text-opacity-40 font-semibold text-sm tracking-widest bg-opacity-80 px-12">
   <div
-    class="container mx-auto grid grid-cols-1 lg:grid-cols-4 gap-12 text-center lg:text-left py-24">
+    class="container mx-auto grid grid-cols-1 lg:grid-cols-4 gap-12 text-center lg:text-left py-8">
     <div>
-      <div class="text-white opacity-50 text-4xl font-display">
-        {Settings.site_name}
+      <div class="text-white opacity-50 text-2xl xl:text-3xl font-display">
+        {
+          Settings.logo ? (
+            <img
+            src={Settings.logo.src}
+            alt="Logo"
+            class="w-full object-contain object-center"
+            />
+            ) :
+            Settings.site_name
+        }
       </div>
+    </div>
+    <div>
+      <div id="status" class="font-display text-white text-sm tracking-widest mb-6">
+        Not logged in
+      </div>
+      <button id="manage" class="block mb-4">
+        Login/signup
+      </button>
+      <a href="/rss.xml" class="block mb-4">
+        RSS
+      </a>
+      <a href="/sitemap-index.xml" class="block mb-4">
+        Sitemap
+      </a>
     </div>
     {
       FooterMenu.map((section) => (
@@ -19,6 +42,9 @@ import { Settings, FooterMenu, Copyright } from '../config'
           </div>
           {section.links.map((item) => (
             <a href={item.url} class="block mb-4">
+              {item.icon && 
+                <span class:list={['w-6 h-6', item.icon]} />
+              }
               {item.text}
             </a>
           ))}
@@ -27,7 +53,7 @@ import { Settings, FooterMenu, Copyright } from '../config'
     }
   </div>
   <div
-    class="text-sm lg:text-base text-center font-heading font-light tracking-widest uppercase text-white opacity-75 pb-24">
+    class="text-sm lg:text-base text-center font-heading font-light tracking-widest uppercase text-white opacity-75 pb-8">
     &copy;{Copyright}
   </div>
 </div>

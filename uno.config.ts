@@ -57,5 +57,10 @@ export default defineConfig({
       }
     }),
     presetTypography()
-  ]
+  ],
+  safelist: [
+    'i-fa6-brands-facebook',
+    'i-fa6-brands-instagram',
+    'i-fa6-brands-twitter',
+  ],
 })

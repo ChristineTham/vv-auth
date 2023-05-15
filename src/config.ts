@@ -1,4 +1,4 @@
-import logo from './assets/Visual Voyager logo 600 x 160.png'
+import logo from './assets/Visual Voyager logo.svg'
 
 export const Settings = {
   site_name: 'Visual Voyager',
@@ -32,23 +32,6 @@ export const NavItems = [
 
 export const FooterMenu = [
   {
-    title: 'More info',
-    links: [
-      {
-        text: 'About',
-        url: '#'
-      },
-      {
-        text: 'Info',
-        url: '#'
-      },
-      {
-        text: 'FAQ',
-        url: '#'
-      }
-    ]
-  },
-  {
     title: 'Helpful Links',
     links: [
       {
@@ -66,19 +49,22 @@ export const FooterMenu = [
     ]
   },
   {
-    title: 'Find out more',
+    title: 'Social Links',
     links: [
       {
-        text: 'About',
-        url: '#'
+        text: 'Facebook',
+        icon: 'i-fa6-brands-facebook',
+        url: 'https://www.facebook.com/visualvoyager'
       },
       {
-        text: 'Info',
-        url: '#'
+        text: 'Instagram',
+        icon: 'i-fa6-brands-instagram',
+        url: 'https://www.instagram.com/v1sualv0yager/'
       },
       {
-        text: 'FAQ',
-        url: '#'
+        text: 'Twitter',
+        icon: 'i-fa6-brands-twitter',
+        url: 'https://twitter.com/VisualVoyager'
       }
     ]
   }
