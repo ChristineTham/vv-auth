@@ -13,15 +13,15 @@ export const NavItems = [
     url: '/'
   },
   {
-    text: 'Status',
-    url: '/status'
+    text: 'Events',
+    url: '/events'
   },
   {
     text: 'About',
     url: '/about-us'
   },
   {
-    text: 'Blog',
+    text: 'Articles',
     url: '/blog'
   },
   {

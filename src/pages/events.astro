@@ -1,16 +1,16 @@
 ---
-export const prerender = true
-import { getCollection } from 'astro:content'
-// import { Image } from 'astro:assets'
-
+import Stripe from 'stripe'
 import Layout from '../layouts/default.astro'
 
-const blogs = await getCollection('blog')
-const sortedBlogs = blogs.sort((a, b) => +b.data.date - +a.data.date)
+const stripe = new Stripe(import.meta.env.STRIPE_SECRET_KEY, {
+  apiVersion: '2022-11-15',
+})
+const products = await stripe.products.list()
+const events = products.data.filter(product => product.metadata.type == 'event')
 
-const title = 'The Blog'
+const title = 'Events'
 const description =
-  'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam vel arcu commodo, sodales nibh sed, efficitur sapien.'
+  'Join us for our next photography event.'
 ---
 
 <Layout {title} {description}>
@@ -20,37 +20,32 @@ const description =
   </div>
 
   <div
-    class="container mx-auto px-6 grid grid-cols-1 lg:grid-cols-2 gap-12 pt-12 pb-24">
+    class="container mx-auto px-6 grid grid-cols-1 lg:grid-cols-2 gap-12 pt-12 pb-24" id="events">
     {
-      sortedBlogs.map((post) => (
+      events.map((event) => (
         <div>
-          {post.data.image && (
-            <a href={'/blog/' + post.slug}>
+          {event.images && (
               <img
-                src={post.data.image}
-                alt={post.data.title}
+                src={event.images[0]}
+                alt={event.name}
                 class="w-full h-52 md:h-64 lg:h-96 xl:h-64 object-cover"
               />
-            </a>
           )}
 
           <div class="bg-gray-50 p-8">
             <div class="text-xs text-gray-600 uppercase font-semibold">
-              {post.data.date.toLocaleString('en-AU', {
-                dateStyle: 'long',
-                timeZone: 'Australia/NSW'
-              })}
+              Event
             </div>
             <h2 class="mt-3 text-3xl mb-6 font-display text-black leading-tight max-w-sm">
-              {post.data.title || 'Untitled'}
+              {event.name}
             </h2>
-            {post.data.description && (
-              <p class="mt-4 max-w-md">{post.data.description}</p>
+            {event.description && (
+              <p class="mt-4 max-w-md">{event.description}</p>
             )}
             <a
-              href={'/blog/' + post.slug}
+              href={'/event/' + event.id}
               class="flex items-center mt-6 uppercase text-sm text-black font-semibold">
-              Read article
+              View Event
               <svg
                 class="w-4 h-4 ml-2"
                 fill="none"
@@ -70,4 +65,20 @@ const description =
       ))
     }
   </div>
+  <script>
+    fetch('/api/get-events', {
+            method: 'POST',
+            headers: {
+              Authorization: `Bearer ${window.netlifyUser.token.access_token}`
+            }
+          })
+            .then((res) => res.json())
+            .then((events) => {
+              window.location.href = link
+            })
+            .catch((err) => console.error(err))
+  </script>
+};
+createCustomer(); 
+  </script>
 </Layout>
