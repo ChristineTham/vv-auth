@@ -33,14 +33,13 @@ const { title, description } = Astro.props
         }
       }
 
-      netlifyIdentity.on('init', user => {
+      netlifyIdentity.on('init', (user) => {
         window.netlifyUser = user
         console.log(user)
       })
+      netlifyIdentity.on('close', () => window.location.reload())
       netlifyIdentity.init()
       window.netlifyIdentity = netlifyIdentity
-      console.log(netlifyIdentity)
-
     </script>
     <title>
       {title || Settings.site_name}

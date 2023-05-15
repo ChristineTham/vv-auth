@@ -13,41 +13,50 @@ const description = ''
 
   <div class="container mx-auto px-6 mb-12 prose prose-sm sm:prose lg:prose-lg">
     <div class="user-info">
-      <button id="manage" class="inline-block border-2 border-yellow-800 font-light text-yellow-800 text-sm uppercase tracking-widest py-3 px-8 hover:bg-yellow-800 hover:text-white">Manage Subscription</button>
+      <button
+        id="manage"
+        class="inline-block border-2 border-yellow-800 font-light text-yellow-800 text-sm uppercase tracking-widest py-3 px-8 hover:bg-yellow-800 hover:text-white"
+        >Login or Signup</button
+      >
     </div>
     <p id="userstatus">User not logged in.</p>
   </div>
   <script is:inline>
-      document.body.onload = function() {
-        const userstatus = document.getElementById("userstatus")
-        if (window.netlifyUser) {
-          userstatus.innerHTML = `Currently logged in: ${window.netlifyUser.user_metadata.full_name} (${window.netlifyUser.email}) [${window.netlifyUser.app_metadata.roles.join(', ')}]`
-        }
-
-        const manage = document.getElementById('manage')
-        manage.addEventListener('click', () => {
-          if (!window.netlifyUser) {
-            window.netlifyIdentity.open()
-          }
-    
-          if (window.netlifyUser) {
-            fetch('/.netlify/functions/create-manage-link', {
-              method: 'POST',
-              headers: {
-                Authorization: `Bearer ${window.netlifyUser.token.access_token}`
-              }
-            })
-              .then((res) => res.json())
-              .then((link) => {
-                window.location.href = link
-              })
-              .catch((err) => console.error(err))
-          }
-          else {
-            console.log("Need to login first")
-          }
-        })
+    document.body.onload = function () {
+      const userstatus = document.getElementById('userstatus')
+      if (window.netlifyUser) {
+        userstatus.innerHTML = `Currently logged in: ${
+          window.netlifyUser.user_metadata.full_name
+        } (${
+          window.netlifyUser.email
+        }) [${window.netlifyUser.app_metadata.roles.join(', ')}]`
       }
 
+      const manage = document.getElementById('manage')
+      if (window.netlifyUser) {
+        manage.innerText = 'Manage Subscription'
+      }
+      manage.addEventListener('click', () => {
+        if (!window.netlifyUser) {
+          window.netlifyIdentity.open()
+        }
+
+        if (window.netlifyUser) {
+          fetch('/api/create-manage-link?id=' + window.netlifyUser.id, {
+            method: 'POST',
+            headers: {
+              Authorization: `Bearer ${window.netlifyUser.token.access_token}`
+            }
+          })
+            .then((res) => res.json())
+            .then((link) => {
+              window.location.href = link
+            })
+            .catch((err) => console.error(err))
+        } else {
+          console.log('Need to login first')
+        }
+      })
+    }
   </script>
 </Layout>

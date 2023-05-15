@@ -23,11 +23,9 @@ exports.handler = async ({ body, headers }, context) => {
     const subscription = stripeEvent.data.object
 
     const result = await client.query(
-      q.Get(
-        q.Match(q.Index('getUserByStripeID'), subscription.customer)
-      )
+      q.Get(q.Match(q.Index('getUserByStripeID'), subscription.customer))
     )
-  
+
     const { netlifyID } = result.data
 
     // take the last word of the plan name and use it as the role

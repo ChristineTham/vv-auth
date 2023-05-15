@@ -201,22 +201,18 @@ const description =
     </div>
   </section>
   <script is:inline>
-    const button1 = document.getElementById('member')
-    const button2 = document.getElementById('premium')
+    document.body.onload = function () {
+      const member = document.getElementById('member')
+      const premium = document.getElementById('premium')
 
-    const login = () => netlifyIdentity.open('login')
-    const signup = () => netlifyIdentity.open('signup')
-    const member = () => {
-      const user = netlifyIdentity.currentUser()
-
-      if (!user) {
-        netlifyIdentity.open('signup')
-      }
-      else {
-        fetch('/.netlify/functions/create-manage-link', {
+      member.addEventListener('click', () => {
+        if (!window.netlifyUser) {
+          netlifyIdentity.open('signup')
+        } else {
+          fetch('/api/create-manage-link', {
             method: 'POST',
             headers: {
-              Authorization: `Bearer ${user.token.access_token}`
+              Authorization: `Bearer ${window.netlifyUser.token.access_token}`
             }
           })
             .then((res) => res.json())
@@ -224,27 +220,29 @@ const description =
               window.location.href = link
             })
             .catch((err) => console.error(err))
-      }
-    }
-    const premium = () => {
-      const user = netlifyIdentity.currentUser()
-
-      if (!user) {
-        netlifyIdentity.open('login')
-      }
-      else {
-        fetch('/.netlify/functions/create-manage-link', {
+        }
+      })
+      premium.addEventListener('click', () => {
+        if (!usewindow.netlifyUserr) {
+          netlifyIdentity.open('login')
+        } else {
+          fetch('/api/create-premium', {
             method: 'POST',
             headers: {
-              Authorization: `Bearer ${user.token.access_token}`
-            }
+              Authorization: `Bearer ${window.netlifyUser.token.access_token}`
+            },
+            body: JSON.stringify(window.netlifyUser)
           })
             .then((res) => res.json())
-            .then((link) => {
-              window.location.href = link
-            })
             .catch((err) => console.error(err))
-      }
+        }
+      })
     }
   </script>
+  <!-- <div class="container mx-auto px-6 mb-12 prose prose-sm sm:prose lg:prose-lg">
+    <script async src="https://js.stripe.com/v3/pricing-table.js"></script>
+    <stripe-pricing-table pricing-table-id="prctbl_1N7rMcEWbgx7oJNLEoT6tMc9"
+    publishable-key="pk_test_51HOdsUEWbgx7oJNLbIIkd9HlrkiUvVkRgF1JOAGu8B5pazboU4bKGEocCRdDffUIoiA6CcNFSIfxdXq37AGX08IA00HZTNNLAH">
+    </stripe-pricing-table>
+  </div> -->
 </Layout>
