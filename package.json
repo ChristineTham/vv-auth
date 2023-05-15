@@ -13,6 +13,7 @@
   },
   "devDependencies": {
     "@iconify-json/fa6-brands": "^1.1.11",
+    "@iconify-json/fa6-regular": "^1.1.11",
     "@iconify-json/fa6-solid": "^1.1.13",
     "@netlify/functions": "^1.6.0",
     "@types/alpinejs": "^3.7.1",

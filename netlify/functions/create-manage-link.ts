@@ -10,7 +10,7 @@ const client = new faunadb.Client({
 })
 
 exports.handler = async (event: HandlerEvent) => {
-  const { user } = JSON.parse(event.body!)
+  const user = JSON.parse(event.body!)
 
   const result = await client.query(
     q.Get(q.Match(q.Index('getUserByNetlifyID'), user.id))

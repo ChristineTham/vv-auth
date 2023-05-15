@@ -10,35 +10,29 @@ const client = new faunadb.Client({
 })
 
 exports.handler = async (event: HandlerEvent) => {
-  const { user } = JSON.parse(event.body!)
+  const user = JSON.parse(event.body!)
 
   const result = await client.query(
     q.Get(q.Match(q.Index('getUserByNetlifyID'), user.id))
   )
   const { stripeID } = result.data
 
-  await stripe.checkout.sessions.create({
+  const session = await stripe.checkout.sessions.create({
     customer: stripeID,
     client_reference_id: user.id,
-    customer_email: user.email,
-    customer_creation: 'if_required',
     mode: 'subscription',
     line_items: [
       {
-        price: 'vvpremium'
+        price: 'vvpremium',
+        quantity: 1
       }
     ],
-    success_url: `${process.env.URL}/success.html`,
-    cancel_url: `${process.env.URL}/cancel.html`,
-    automatic_tax: { enabled: true }
+    success_url: `${process.env.URL}/success`,
+    cancel_url: `${process.env.URL}/membership`
   })
 
   return {
     statusCode: 200,
-    body: JSON.stringify({
-      app_metadata: {
-        roles: ['premium', 'stripe:' + stripeID]
-      }
-    })
+    body: JSON.stringify(session)
   }
 }

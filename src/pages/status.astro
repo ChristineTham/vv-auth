@@ -42,11 +42,12 @@ const description = ''
         }
 
         if (window.netlifyUser) {
-          fetch('/api/create-manage-link?id=' + window.netlifyUser.id, {
+          fetch('/api/create-manage-link', {
             method: 'POST',
             headers: {
               Authorization: `Bearer ${window.netlifyUser.token.access_token}`
-            }
+            },
+            body: JSON.stringify(window.netlifyUser)
           })
             .then((res) => res.json())
             .then((link) => {
