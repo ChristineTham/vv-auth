@@ -1,2 +1,2 @@
 /admin/*  /admin/:splat  200!  Role=admin,editor
-/admin/*  /status  401!
+/admin/*  /  401!
