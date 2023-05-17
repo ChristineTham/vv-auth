@@ -4,6 +4,7 @@ import type { CollectionEntry } from 'astro:content'
 import { getCollection } from 'astro:content'
 import Layout from '../../layouts/default.astro'
 import Gallery from '../../components/gallery.astro'
+import Map from '../../components/map.astro'
 
 // 1. Generate a new path for every collection entry
 export async function getStaticPaths() {
@@ -20,6 +21,8 @@ interface Props {
 
 const { post } = Astro.props
 const { Content } = await post.render()
+
+const geomap = post.data.geo ? JSON.parse(post.data.geo) : null
 ---
 
 <Layout title={post.data.title} description={post.data.description}>
@@ -78,6 +81,9 @@ const { Content } = await post.render()
   </div>
   {post.data.gallery &&
     <Gallery folder={post.data.gallery}/>
+  }
+  {post.data.geo &&
+    <Map text={post.data.title} lat={parseFloat(geomap.coordinates[1])} lng={parseFloat(geomap.coordinates[0])} zoom={16}}/>
   }
   <div class="giscus max-w-4xl mx-auto"></div>
   <script

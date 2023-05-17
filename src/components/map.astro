@@ -8,6 +8,7 @@ export interface Props {
 }
 
 const { text, lat, lng, zoom } = Astro.props
+console.log(text, lat, lng, zoom)
 ---
 <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
 <script is:inline src="https://unpkg.com/leaflet/dist/leaflet.js"></script>

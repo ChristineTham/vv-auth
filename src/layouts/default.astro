@@ -54,36 +54,36 @@ const { title, description } = Astro.props
       netlifyIdentity.on('close', () => window.location.reload())
       netlifyIdentity.init()
       window.netlifyIdentity = netlifyIdentity
+      const manage = document.getElementById('manage')
       if (window.netlifyUser) {
         const status = document.getElementById('status')
-        const manage = document.getElementById('manage')
 
         status!.innerHTML = `${window.netlifyUser.user_metadata.full_name}<br />(${window.netlifyUser.email})`
         manage!.innerText = 'Manage membership'
 
-        manage!.addEventListener('click', () => {
-          if (!window.netlifyUser) {
-            window.netlifyIdentity.open()
-          }
-
-          if (window.netlifyUser) {
-            fetch('/api/create-manage-link', {
-              method: 'POST',
-              headers: {
-                Authorization: `Bearer ${window.netlifyUser.token.access_token}`
-              },
-              body: JSON.stringify(window.netlifyUser)
-            })
-              .then((res) => res.json())
-              .then((link) => {
-                window.location.href = link
-              })
-              .catch((err) => console.error(err))
-          } else {
-            console.log('Need to login first')
-          }
-        })
       }
+      manage!.addEventListener('click', () => {
+        if (!window.netlifyUser) {
+          window.netlifyIdentity.open()
+        }
+
+        if (window.netlifyUser) {
+          fetch('/api/create-manage-link', {
+            method: 'POST',
+            headers: {
+              Authorization: `Bearer ${window.netlifyUser.token.access_token}`
+            },
+            body: JSON.stringify(window.netlifyUser)
+          })
+            .then((res) => res.json())
+            .then((link) => {
+              window.location.href = link
+            })
+            .catch((err) => console.error(err))
+        } else {
+          console.log('Need to login first')
+        }
+      })
     </script>
   </body>
 </html>
