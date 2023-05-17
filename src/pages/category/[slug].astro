@@ -22,7 +22,7 @@ interface Props {
 const { category } = Astro.props
 const { Content } = await category.render()
 
-const articles = await getCollection('post')
+const articles = await getCollection('post', ({ data }) => data.draft !== true)
 const posts = articles
   .filter((post) => post.data.categories.includes(category.data.title))
   .sort((a, b) => +b.data.date - +a.data.date)

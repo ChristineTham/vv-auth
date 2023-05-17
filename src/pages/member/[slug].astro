@@ -10,7 +10,7 @@ import Map from '../../components/map.astro'
 export async function getStaticPaths() {
   const blogEntries = await getCollection('post', ({ data }) => (
     data.draft !== true &&
-    !data.categories.includes('Member Exclusive')
+    data.categories.includes('Member Exclusive')
   ))
   return blogEntries.map((post) => ({
     params: { slug: post.slug },

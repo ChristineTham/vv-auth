@@ -3,9 +3,7 @@ import { getCollection } from 'astro:content'
 // @ts-ignore 
 import Mappath from 'astro-travelens/mappath'
 
-const posts = await getCollection('post', ({ data }) => {
-  return data.draft !== true;
-})
+const posts = await getCollection('post', ({ data }) => data.draft !== true)
 
 const points = posts
     .sort((a, b) => +a.data.date - +b.data.date)

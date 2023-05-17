@@ -25,6 +25,12 @@
   conditions = {Role = ["member"]}
 
 [[redirects]]
+  from = "/member/*"
+  to = "/member-only"
+  force = true
+  status = 401
+
+[[redirects]]
   from = "/admin/*"
   to = "/admin/:splat"
   force = true

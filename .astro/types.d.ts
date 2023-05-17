@@ -132,6 +132,13 @@ declare module 'astro:content' {
   collection: "category",
   data: InferEntrySchema<"category">
 } & { render(): Render[".md"] },
+"member.md": {
+  id: "member.md",
+  slug: "member",
+  body: string,
+  collection: "category",
+  data: InferEntrySchema<"category">
+} & { render(): Render[".md"] },
 "photo-of-the-day.md": {
   id: "photo-of-the-day.md",
   slug: "photo-of-the-day",
@@ -172,6 +179,13 @@ declare module 'astro:content' {
 "focus-photography-awards-dinner-2019.md": {
   id: "focus-photography-awards-dinner-2019.md",
   slug: "focus-photography-awards-dinner-2019",
+  body: string,
+  collection: "post",
+  data: InferEntrySchema<"post">
+} & { render(): Render[".md"] },
+"member-only.md": {
+  id: "member-only.md",
+  slug: "member-only",
   body: string,
   collection: "post",
   data: InferEntrySchema<"post">

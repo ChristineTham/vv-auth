@@ -7,7 +7,7 @@ import Layout from '../layouts/default.astro'
 import CategoryGrid from '../components/categorygrid.astro'
 import Posts from '../components/posts.astro'
 
-const articles = await getCollection('post')
+const articles = await getCollection('post', ({ data }) => data.draft !== true)
 const sortedPosts = articles.sort((a, b) => +b.data.date - +a.data.date)
 
 const title = 'Posts'

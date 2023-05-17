@@ -12,7 +12,7 @@ const { posts } = Astro.props
   {
     posts.map((post) => (
       <div class="bg-gray-50 rounded-lg shadow-lg">
-        <a href={'/post/' + post.slug}>
+        <a href={(post.data.categories.includes('Member Exclusive') ? '/member/' : '/post/') + post.slug}>
           <img
             src={post.data.image}
             alt={post.data.title}
@@ -35,7 +35,7 @@ const { posts } = Astro.props
           </div>
           {post.data.description && <p class="mt-4">{post.data.description}</p>}
           <a
-            href={'/post/' + post.slug}
+            href={(post.data.categories.includes('Member Exclusive') ? '/member/' : '/post/') + post.slug}}
             class="flex items-center mt-6 uppercase text-sm text-black font-semibold">
             Read article
             <span class="ml-2 h-6 w-6 text-purple i-fa6-solid-circle-right" />
