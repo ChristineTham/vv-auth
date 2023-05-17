@@ -101,7 +101,30 @@ declare module 'astro:content' {
 	>;
 
 	const entryMap: {
-		"category": {
+		"author": {
+"Positivity.md": {
+  id: "Positivity.md",
+  slug: "positivity",
+  body: string,
+  collection: "author",
+  data: InferEntrySchema<"author">
+} & { render(): Render[".md"] },
+"christie.md": {
+  id: "christie.md",
+  slug: "christie",
+  body: string,
+  collection: "author",
+  data: InferEntrySchema<"author">
+} & { render(): Render[".md"] },
+"lesley.md": {
+  id: "lesley.md",
+  slug: "lesley",
+  body: string,
+  collection: "author",
+  data: InferEntrySchema<"author">
+} & { render(): Render[".md"] },
+},
+"category": {
 "article.md": {
   id: "article.md",
   slug: "article",

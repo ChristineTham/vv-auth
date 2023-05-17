@@ -1,5 +1,5 @@
 ---
-author: christie
+author: Chris Tham
 title: 'Allan Bridge'
 date: 2023-02-02T20:00:00.000+11:00
 description: 'The Allan Bridge, located between Glenbawn and Segenhoe, is the most significant heritage bridge in the Upper Hunter Shire '

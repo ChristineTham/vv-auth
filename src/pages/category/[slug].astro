@@ -1,37 +1,40 @@
 ---
-import { Image } from 'astro:assets'
-
 export const prerender = true
+import { Image } from 'astro:assets'
+import type { CollectionEntry } from 'astro:content'
 import { getCollection } from 'astro:content'
 import Layout from '../../layouts/default.astro'
 import Posts from '../../components/posts.astro'
 
 // 1. Generate a new path for every collection entry
 export async function getStaticPaths() {
-  const catEntries = await getCollection('category')
-  return catEntries.map((entry) => ({
-    params: { slug: entry.slug },
-    props: { entry }
+  const categories = await getCollection('category')
+  return categories.map((category) => ({
+    params: { slug: category.slug },
+    props: { category }
   }))
 }
 
 // 2. When it's time to render, you can get the entry directly from the prop
-const { entry } = Astro.props
-const { Content } = await entry.render()
+interface Props {
+  category: CollectionEntry<'category'>
+}
+const { category } = Astro.props
+const { Content } = await category.render()
 
 const articles = await getCollection('post')
-const category = articles
-  .filter((post) => post.data.categories.includes(entry.data.title))
+const posts = articles
+  .filter((post) => post.data.categories.includes(category.data.title))
   .sort((a, b) => +b.data.date - +a.data.date)
 ---
 
 <Layout
-  title={entry.data.plural || entry.data.title}
-  description={entry.data.description}>
+  title={category.data.plural || category.data.title}
+  description={category.data.description}>
   <div class="relative h-96">
     <Image
-      src={entry.data.image}
-      alt={entry.data.title}
+      src={category.data.image}
+      alt={category.data.title}
       class="w-full h-full object-cover"
     />
   </div>
@@ -39,12 +42,12 @@ const category = articles
   <div
     class="max-w-4xl mx-auto bg-white py-12 px-12 lg:px-24 -mt-32 relative z-10">
     <h1 class="font-display font-bold text-5xl mb-6">
-      {entry.data.plural || entry.data.title}
+      {category.data.plural || category.data.title}
     </h1>
-    <p class="max-w-lg mx-auto">{entry.data.description}</p>
+    <p class="max-w-lg mx-auto">{category.data.description}</p>
   </div>
   <div class="prose prose-sm sm:prose lg:prose-lg mt-6">
     <Content />
   </div>
-  <Posts posts={category} />
+  <Posts posts={posts} />
 </Layout>

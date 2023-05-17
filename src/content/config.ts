@@ -26,8 +26,19 @@ const categoryCollection = defineCollection({
     })
 })
 
+const authorCollection = defineCollection({
+  schema: ({ image }) =>
+    z.object({
+      title: z.string(),
+      description: z.string(),
+      image: image(),
+      website: z.string().optional()
+    })
+})
+
 // 3. Export a single `collections` object to register your collection(s)
 export const collections = {
   post: postCollection,
-  category: categoryCollection
+  category: categoryCollection,
+  author: authorCollection
 }

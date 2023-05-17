@@ -1,0 +1,40 @@
+---
+import { getCollection } from 'astro:content'
+import { Image } from 'astro:assets'
+const authors = await getCollection('author')
+
+const cta_title = 'Explore the world with us'
+const cta_description = `Visual Voyager is primarily focused on showcasing photos of the beautiful natural features, architecture, activities, people, plants and animals in various locations around the world.
+
+The site also contains reviews of cameras and lenses, events and workshops that you can sign up for, as well as the travel and photography-related articles.`
+---
+
+<div class="max-w-xl mx-auto text-center pt-24 md:pt-32">
+  <div class="w-24 h-2 bg-purple-800 mb-4 mx-auto"></div>
+  <h2 class="font-display font-bold text-3xl md:text-4xl lg:text-5xl mb-6">
+    {cta_title}
+  </h2>
+  <p class="font-light text-gray-600 mb-6 leading-relaxed">
+    {cta_description}
+  </p>
+</div>
+<div
+  class="container mx-auto text-center pt-6 pb-24 md:pb-32 grid grid-cols-3 gap-12 place-items-center place-content-center">
+  {
+    authors.map((author) => (
+      <a
+        href={'/author/' + author.slug}
+        class="block hover:opacity-75 place-self-auto">
+        <Image
+          src={author.data.image}
+          alt={author.data.title}
+          class="w-64 h-64 object-cover"
+        />
+        <h3 class="font-display text-neutral-800 font-bold pt-2 tracking-wide">
+          {author.data.title}
+        </h3>
+        <h3 class="text-gray-600">{author.data.description}</h3>
+      </a>
+    ))
+  }
+</div>

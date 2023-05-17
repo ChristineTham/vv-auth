@@ -1,0 +1,49 @@
+---
+import { Image } from 'astro:assets'
+
+export const prerender = true
+import type { CollectionEntry } from 'astro:content'
+import { getCollection } from 'astro:content'
+import Layout from '../../layouts/default.astro'
+import Posts from '../../components/posts.astro'
+
+// 1. Generate a new path for every collection entry
+export async function getStaticPaths() {
+  const catEntries = await getCollection('author')
+  return catEntries.map((author) => ({
+    params: { slug: author.slug },
+    props: { author }
+  }))
+}
+
+// 2. When it's time to render, you can get the entry directly from the prop
+interface Props {
+  author: CollectionEntry<'author'>
+}
+const { author } = Astro.props
+const { Content } = await author.render()
+
+const articles = await getCollection('post')
+const posts = articles
+  .filter((post) => post.data.author == author.data.title)
+  .sort((a, b) => +b.data.date - +a.data.date)
+---
+
+<Layout title={author.data.title} description={author.data.description}>
+  <div class="text-center py-12 px-6 mt-12 max-w-4xl mx-auto">
+    <h1 class="font-display font-bold text-5xl mb-2">{author.data.title}</h1>
+    <p class="max-w-lg mx-auto italic mb-2">{author.data.description}</p>
+    <div class="mx-auto h-96 w-96">
+      <Image
+        src={author.data.image}
+        alt={author.data.title}
+        class="w-full h-full object-cover"
+      />
+    </div>
+  </div>
+
+  <div class="prose prose-sm sm:prose lg:prose-lg mt-6 mx-auto">
+    <Content />
+  </div>
+  <Posts posts={posts} />
+</Layout>
