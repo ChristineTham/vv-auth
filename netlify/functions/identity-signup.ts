@@ -1,13 +1,13 @@
 import type { HandlerEvent } from '@netlify/functions'
 
 const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY)
-const faunadb = require('faunadb')
-const q = faunadb.query
+// const faunadb = require('faunadb')
+// const q = faunadb.query
 
-// Instantiate a client
-const client = new faunadb.Client({
-  secret: process.env.FAUNA_SERVER_KEY
-})
+// // Instantiate a client
+// const client = new faunadb.Client({
+//   secret: process.env.FAUNA_SERVER_KEY
+// })
 
 exports.handler = async (event: HandlerEvent) => {
   const { user } = JSON.parse(event.body!)
@@ -25,15 +25,15 @@ exports.handler = async (event: HandlerEvent) => {
     items: [{ price: process.env.STRIPE_DEFAULT_PRICE_PLAN }]
   })
 
-  // store the Netlify and Stripe IDs in Fauna
-  await client.query(
-    q.Create(q.Collection('User'), {
-      data: {
-        netlifyID: user.id,
-        stripeID: customer.id
-      }
-    })
-  )
+  // // store the Netlify and Stripe IDs in Fauna
+  // await client.query(
+  //   q.Create(q.Collection('User'), {
+  //     data: {
+  //       netlifyID: user.id,
+  //       stripeID: customer.id
+  //     }
+  //   })
+  // )
 
   return {
     statusCode: 200,

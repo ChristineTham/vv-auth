@@ -12,7 +12,7 @@ import { Settings, NavItems } from '../config'
     <div
       x-show="showMenu"
       x-cloak
-      class="fixed inset-0 w-full h-full bg-white z-50 text-yellow-900">
+      class="fixed inset-0 w-full h-full bg-white z-50 text-purple-900">
       <div
         class="container h-full mx-auto px-6 py-8 relative z-10 flex flex-col items-center justify-center text-2xl uppercase font-bold tracking-widest space-y-6">
         <button
@@ -36,13 +36,13 @@ import { Settings, NavItems } from '../config'
           NavItems.map((item) => (
             <a
               href={item.url}
-              class="inline-block border-b-4 border-transparent hover:border-yellow-900">
+              class="inline-block border-b-4 border-transparent hover:border-purple-900">
               {item.text}
             </a>
           ))
         }
       </div>
-      <div class="absolute inset-0 w-full h-full bg-yellow-900 bg-opacity-20">
+      <div class="absolute inset-0 w-full h-full bg-purple-900 bg-opacity-20">
       </div>
     </div>
   </div>
@@ -55,7 +55,7 @@ import { Settings, NavItems } from '../config'
           <img
             src={Settings.logo.src}
             alt="Logo"
-            class="h-20 w-64 object-contain object-center"
+            class="h-16 w-full object-contain object-center"
           />
         ) : (
           Settings.site_name
@@ -72,5 +72,5 @@ import { Settings, NavItems } from '../config'
   </div>
 </div>
 
-<div class="w-full h-24 bg-yellow-900 bg-opacity-95 absolute top-0 left-0">
+<div class="w-full h-24 bg-purple-900 bg-opacity-95 absolute top-0 left-0">
 </div>

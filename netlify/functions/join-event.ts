@@ -6,7 +6,8 @@ exports.handler = async (event: HandlerEvent) => {
   const user = JSON.parse(event.body!)
   const price = event.queryStringParameters!['price']
   const roles = user.app_metadata.roles as string[]
-  const stripeID = roles[roles.findIndex(role => role.slice(0,7) == 'stripe:')].slice(7)
+  const stripeID =
+    roles[roles.findIndex((role) => role.slice(0, 7) == 'stripe:')].slice(7)
 
   const session = await stripe.checkout.sessions.create({
     customer: stripeID,

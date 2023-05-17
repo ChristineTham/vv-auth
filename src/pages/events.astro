@@ -1,35 +1,44 @@
 ---
 import Stripe from 'stripe'
+import { Image } from 'astro:assets'
 import Layout from '../layouts/default.astro'
+import cover from '../assets/events.jpeg'
 
 const stripe = new Stripe(import.meta.env.STRIPE_SECRET_KEY, {
-  apiVersion: '2022-11-15',
+  apiVersion: '2022-11-15'
 })
 const products = await stripe.products.list()
-const events = products.data.filter(product => product.metadata.type == 'event')
+const events = products.data.filter(
+  (product) => product.metadata.type == 'event'
+)
 
 const title = 'Events'
-const description =
-  'Join us for our next photography event.'
+const description = 'Join us for our next photography event.'
 ---
 
 <Layout {title} {description}>
-  <div class="text-center py-12 px-6 mt-12">
+  <div class="relative h-96">
+    <Image src={cover} alt="Cover" class="w-full h-full object-cover" />
+  </div>
+
+  <div
+    class="max-w-4xl mx-auto bg-white py-12 px-12 lg:px-24 -mt-32 relative z-10">
     <h1 class="font-display font-bold text-5xl mb-6">{title}</h1>
     <p class="max-w-lg mx-auto">{description}</p>
   </div>
 
   <div
-    class="container mx-auto px-6 grid grid-cols-1 lg:grid-cols-2 gap-12 pt-12 pb-24" id="events">
+    class="container mx-auto px-6 grid grid-cols-1 lg:grid-cols-2 gap-12 pt-12 pb-24"
+    id="events">
     {
       events.map((event) => (
         <div>
           {event.images && (
-              <img
-                src={event.images[0]}
-                alt={event.name}
-                class="w-full h-52 md:h-64 lg:h-96 xl:h-64 object-cover"
-              />
+            <img
+              src={event.images[0]}
+              alt={event.name}
+              class="w-full h-52 md:h-64 lg:h-96 xl:h-64 object-cover"
+            />
           )}
 
           <div class="bg-gray-50 p-8">
@@ -65,20 +74,4 @@ const description =
       ))
     }
   </div>
-  <script>
-    fetch('/api/get-events', {
-            method: 'POST',
-            headers: {
-              Authorization: `Bearer ${window.netlifyUser.token.access_token}`
-            }
-          })
-            .then((res) => res.json())
-            .then((events) => {
-              window.location.href = link
-            })
-            .catch((err) => console.error(err))
-  </script>
-};
-createCustomer(); 
-  </script>
 </Layout>

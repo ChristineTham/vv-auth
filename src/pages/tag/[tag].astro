@@ -1,0 +1,46 @@
+---
+import { Image } from 'astro:assets'
+import { CollectionEntry, getCollection } from 'astro:content'
+import Layout from '../../layouts/default.astro'
+import Posts from '../../components/posts.astro'
+import Cover from '../../assets/tags.jpeg'
+
+export async function getStaticPaths() {
+  const posts = await getCollection('post', ({ data }) => data.draft !== true)
+  const allTags = posts
+    .map((entry) => entry.data.tags)
+    .flat(3)
+    .sort()
+  const uniqueTags = Array.from(new Set(allTags))
+  const tags = uniqueTags.map((tag) => {
+    return {
+      tag: tag,
+      posts: posts.filter(
+        (post) => post.data.tags && post.data.tags.includes(tag!)
+      )
+    }
+  })
+  return tags.map((tag) => ({
+    params: { tag: tag.tag },
+    props: { tag: tag.tag, posts: tag.posts }
+  }))
+}
+
+export interface Props {
+  tag: string
+  posts: CollectionEntry<'post'>[]
+}
+const { tag, posts } = Astro.props
+---
+
+<Layout title={'Tag: ' + tag} description={'Tag: ' + tag}>
+  <div class="relative h-96">
+    <Image src={Cover} alt={tag + 'cover'} class="w-full h-full object-cover" />
+  </div>
+
+  <div
+    class="max-w-4xl mx-auto bg-white py-12 px-12 lg:px-24 -mt-32 relative z-10">
+    <h1 class="font-display font-bold text-5xl mb-6">Tag: {tag}</h1>
+  </div>
+  <Posts posts={posts} />
+</Layout>

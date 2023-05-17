@@ -1,0 +1,48 @@
+---
+import { Image } from 'astro:assets'
+
+import footer_cta_image from '../assets/community.jpeg'
+
+const cta_title = 'Explore the world with us'
+const cta_description = `Visual Voyager is primarily focused on showcasing photos of the beautiful natural features, architecture, activities, people, plants and animals in various locations around the world.
+
+The site also contains reviews of cameras and lenses, events and workshops that you can sign up for, as well as the travel and photography-related articles.`
+const footer_cta_title = 'Become a member!'
+const footer_cta_description =
+  'Join our community and become a member or site supporter!'
+const footer_cta_button_text = 'Find out more'
+const footer_cta_button_link = '/membership'
+---
+
+<div class="max-w-xl mx-auto text-center py-24 md:py-32">
+  <div class="w-24 h-2 bg-purple-800 mb-4 mx-auto"></div>
+  <h2 class="font-display font-bold text-3xl md:text-4xl lg:text-5xl mb-6">
+    {cta_title}
+  </h2>
+  <p class="font-light text-gray-600 mb-6 leading-relaxed">
+    {cta_description}
+  </p>
+</div>
+
+<div class="relative w-full py-12 px-12 bg-neutral-800">
+  <div class="relative z-10 text-center py-12 md:py-24">
+    <h1
+      class="text-white text-center text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-display font-bold mb-6">
+      {footer_cta_title}
+    </h1>
+    <p class="text-white mb-10 text-base md:text-lg font-bold">
+      {footer_cta_description}
+    </p>
+    <a
+      href={footer_cta_button_link}
+      class="inline-block bg-purple-800 text-white uppercase text-sm tracking-widest font-heading px-8 py-4">
+      {footer_cta_button_text}
+    </a>
+  </div>
+
+  <Image
+    src={footer_cta_image}
+    class="w-full h-full absolute inset-0 object-cover opacity-30 z-5"
+    alt="CTA"
+  />
+</div>

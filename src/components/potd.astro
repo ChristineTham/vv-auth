@@ -1,0 +1,43 @@
+---
+import { getCollection } from 'astro:content'
+// import { Image } from 'astro:assets'
+
+const articles = await getCollection(
+  'post',
+  ({ data }) =>
+    data.draft !== true && data.categories.includes('Photo of the Day')
+)
+const post = articles.sort((a, b) => +b.data.date - +a.data.date)[0]
+---
+
+<div class="py-8 text-center">
+  <p class="font-light text-purple-800 text-lg text-bold uppercase">
+    Photo of the Day
+  </p>
+  <div class="mx-auto w-40 h-2 bg-purple-800 mb-4"></div>
+  <h2 class="font-display font-bold text-2xl md:text-3xl lg:text-4xl mb-2">
+    {post.data.title}
+  </h2>
+  <p
+    class="max-w-2xl mx-auto font-light text-neutral-900 text-sm md:text-base mb-6 leading-relaxed">
+    {post.data.description}
+  </p>
+  <a
+    href={'/post/' + post.slug}
+    class="inline-block border-2 border-purple-800 font-light text-purple-800 text-sm uppercase tracking-widest py-3 px-8 hover:bg-purple-800 hover:text-white">
+    View
+  </a>
+  <a
+    href="/category/photo-of-the-day"
+    class="inline-block border-2 border-purple-800 font-light text-purple-800 text-sm uppercase tracking-widest py-3 px-8 hover:bg-purple-800 hover:text-white">
+    All Photos
+  </a>
+</div>
+<div class="relative flex justify-center">
+  <div class="w-full h-full bg-gray-100 absolute inset-0"></div>
+  <img
+    src={post.data.image!}
+    alt={post.data.title!}
+    class="w-full h-full object-cover relative"
+  />
+</div>

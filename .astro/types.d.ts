@@ -101,50 +101,78 @@ declare module 'astro:content' {
 	>;
 
 	const entryMap: {
-		"blog": {
-"my-first-post.md": {
-  id: "my-first-post.md",
-  slug: "my-first-post",
+		"category": {
+"article.md": {
+  id: "article.md",
+  slug: "article",
   body: string,
-  collection: "blog",
-  data: InferEntrySchema<"blog">
+  collection: "category",
+  data: InferEntrySchema<"category">
 } & { render(): Render[".md"] },
-"my-third-big-post.md": {
-  id: "my-third-big-post.md",
-  slug: "my-third-big-post",
+"photo-of-the-day.md": {
+  id: "photo-of-the-day.md",
+  slug: "photo-of-the-day",
   body: string,
-  collection: "blog",
-  data: InferEntrySchema<"blog">
+  collection: "category",
+  data: InferEntrySchema<"category">
 } & { render(): Render[".md"] },
-"this-is-latest-post.md": {
-  id: "this-is-latest-post.md",
-  slug: "this-is-latest-post",
+"review.md": {
+  id: "review.md",
+  slug: "review",
   body: string,
-  collection: "blog",
-  data: InferEntrySchema<"blog">
+  collection: "category",
+  data: InferEntrySchema<"category">
+} & { render(): Render[".md"] },
+"series.md": {
+  id: "series.md",
+  slug: "series",
+  body: string,
+  collection: "category",
+  data: InferEntrySchema<"category">
 } & { render(): Render[".md"] },
 },
-"category": {
-"city-streets.md": {
-  id: "city-streets.md",
-  slug: "city-streets",
+"post": {
+"allan-bridge.md": {
+  id: "allan-bridge.md",
+  slug: "allan-bridge",
   body: string,
-  collection: "category",
-  data: InferEntrySchema<"category">
+  collection: "post",
+  data: InferEntrySchema<"post">
 } & { render(): Render[".md"] },
-"forest-trials.md": {
-  id: "forest-trials.md",
-  slug: "forest-trials",
+"black-faced-cuckoo-shrike.md": {
+  id: "black-faced-cuckoo-shrike.md",
+  slug: "black-faced-cuckoo-shrike",
   body: string,
-  collection: "category",
-  data: InferEntrySchema<"category">
+  collection: "post",
+  data: InferEntrySchema<"post">
 } & { render(): Render[".md"] },
-"sandy-beaches.md": {
-  id: "sandy-beaches.md",
-  slug: "sandy-beaches",
+"focus-photography-awards-dinner-2019.md": {
+  id: "focus-photography-awards-dinner-2019.md",
+  slug: "focus-photography-awards-dinner-2019",
   body: string,
-  collection: "category",
-  data: InferEntrySchema<"category">
+  collection: "post",
+  data: InferEntrySchema<"post">
+} & { render(): Render[".md"] },
+"new-site.md": {
+  id: "new-site.md",
+  slug: "new-site",
+  body: string,
+  collection: "post",
+  data: InferEntrySchema<"post">
+} & { render(): Render[".md"] },
+"real-life-review-sony-alpha-1-camera.md": {
+  id: "real-life-review-sony-alpha-1-camera.md",
+  slug: "real-life-review-sony-alpha-1-camera",
+  body: string,
+  collection: "post",
+  data: InferEntrySchema<"post">
+} & { render(): Render[".md"] },
+"review-nokton-75mm-vm.md": {
+  id: "review-nokton-75mm-vm.md",
+  slug: "review-nokton-75mm-vm",
+  body: string,
+  collection: "post",
+  data: InferEntrySchema<"post">
 } & { render(): Render[".md"] },
 },
 

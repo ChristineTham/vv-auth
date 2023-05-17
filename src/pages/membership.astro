@@ -41,28 +41,36 @@ const description =
 
             <ul class="flex flex-col mt-8 space-y-4">
               <li class="inline-flex items-center space-x-2">
-                <span class="flex-shrink-0 w-5 h-5 text-green-500 i-fa6-regular-square-plus"/>
+                <span
+                  class="flex-shrink-0 w-5 h-5 text-green-500 i-fa6-regular-square-plus"
+                ></span>
                 <span class="text-base font-medium text-gray-900"
                   >Access all free content</span
                 >
               </li>
 
               <li class="inline-flex items-center space-x-2">
-                <span class="flex-shrink-0 w-5 h-5 text-green-500 i-fa6-regular-square-plus"/>
+                <span
+                  class="flex-shrink-0 w-5 h-5 text-green-500 i-fa6-regular-square-plus"
+                ></span>
                 <span class="text-base font-medium text-gray-900"
                   >Access member exclusive content</span
                 >
               </li>
 
               <li class="inline-flex items-center space-x-2">
-                <span class="flex-shrink-0 w-5 h-5 text-red-500 i-fa6-regular-square-minus"/>
+                <span
+                  class="flex-shrink-0 w-5 h-5 text-red-500 i-fa6-regular-square-minus"
+                ></span>
                 <span class="text-base font-medium text-gray-400"
                   >Access premium content</span
                 >
               </li>
 
               <li class="inline-flex items-center space-x-2">
-                <span class="flex-shrink-0 w-5 h-5 text-red-500 i-fa6-regular-square-minus"/>
+                <span
+                  class="flex-shrink-0 w-5 h-5 text-red-500 i-fa6-regular-square-minus"
+                ></span>
                 <span class="text-base font-medium text-gray-400"
                   >Discount on events and workshops</span
                 >
@@ -89,28 +97,36 @@ const description =
 
             <ul class="flex flex-col mt-8 space-y-4">
               <li class="inline-flex items-center space-x-2">
-                <span class="flex-shrink-0 w-5 h-5 text-green-500 i-fa6-regular-square-plus"/>
+                <span
+                  class="flex-shrink-0 w-5 h-5 text-green-500 i-fa6-regular-square-plus"
+                ></span>
                 <span class="text-base font-medium text-gray-900"
                   >Access all free content</span
                 >
               </li>
 
               <li class="inline-flex items-center space-x-2">
-                <span class="flex-shrink-0 w-5 h-5 text-green-500 i-fa6-regular-square-plus"/>
+                <span
+                  class="flex-shrink-0 w-5 h-5 text-green-500 i-fa6-regular-square-plus"
+                ></span>
                 <span class="text-base font-medium text-gray-900"
                   >Access member exclusive content</span
                 >
               </li>
 
               <li class="inline-flex items-center space-x-2">
-                <span class="flex-shrink-0 w-5 h-5 text-green-500 i-fa6-regular-square-plus"/>
+                <span
+                  class="flex-shrink-0 w-5 h-5 text-green-500 i-fa6-regular-square-plus"
+                ></span>
                 <span class="text-base font-medium text-gray-900"
                   >Access premium content</span
                 >
               </li>
 
               <li class="inline-flex items-center space-x-2">
-                <span class="flex-shrink-0 w-5 h-5 text-green-500 i-fa6-regular-square-plus"/>
+                <span
+                  class="flex-shrink-0 w-5 h-5 text-green-500 i-fa6-regular-square-plus"
+                ></span>
                 <span class="text-base font-medium text-gray-900"
                   >20% Discount on events and workshops</span
                 >
@@ -135,9 +151,9 @@ const description =
       const premium = document.getElementById('premium')
 
       if (window.netlifyUser) {
-        member.innerText = "Manage"
-        premium.innerText = "Upgrade"
-      } 
+        member.innerText = 'Manage'
+        premium.innerText = 'Upgrade'
+      }
 
       member.addEventListener('click', () => {
         if (!window.netlifyUser) {

@@ -1,0 +1,56 @@
+---
+import { getCollection } from 'astro:content'
+// import { Image } from 'astro:assets'
+
+const articles = await getCollection(
+  'post',
+  ({ data }) => data.draft !== true && data.categories.includes('Review')
+)
+const post = articles.sort((a, b) => +b.data.date - +a.data.date)[0]
+---
+
+<div class="grid grid-cols-1 md:grid-cols-2">
+  <div class="bg-white p-12 md:p-24 flex justify-end items-center">
+    <a href={'/post/' + post.slug}>
+      <img src={post.data.image} class="w-full max-w-md" />
+    </a>
+  </div>
+
+  <div
+    class="md:order-first bg-gray-100 p-12 md:p-24 flex justify-start items-center">
+    <div class="max-w-md">
+      <p class="font-light text-purple-800 text-lg text-bold uppercase">
+        Latest Review
+      </p>
+      <div class="w-32 h-2 bg-purple-800 mb-4"></div>
+      <h2 class="font-display font-bold text-2xl md:text-3xl lg:text-4xl mb-2">
+        {post.data.title}
+      </h2>
+      <p class="text-neutral-500 text-xs md:text-sm mb-6">
+        <span class="h-4 w-4 i-fa6-solid-pen"></span>
+        {post.data.author}
+        <span class="ml-2 h-4 w-4 i-fa6-solid-clock"></span>
+        {
+          post.data.date.toLocaleString('en-AU', {
+            dateStyle: 'long',
+            timeZone: 'Australia/NSW'
+          })
+        }
+      </p>
+      <p
+        class="font-light text-neutral-900 text-sm md:text-base mb-6 leading-relaxed">
+        {post.data.description}
+      </p>
+      <a
+        href={'/post/' + post.slug}
+        class="inline-block border-2 border-purple-800 font-light text-purple-800 text-sm uppercase tracking-widest py-3 px-8 hover:bg-purple-800 hover:text-white">
+        Read more
+      </a>
+      <a
+        href={'/category/review'}
+        class="ml-2 inline-block border-2 border-purple-800 font-light text-purple-800 text-sm uppercase tracking-widest py-3 px-8 hover:bg-purple-800 hover:text-white">
+        All Reviews
+      </a>
+    </div>
+  </div>
+</div>

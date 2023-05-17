@@ -3,6 +3,7 @@ import logo from './assets/Visual Voyager logo.svg'
 export const Settings = {
   site_name: 'Visual Voyager',
   logo: logo,
+  timezone: 'Australia/Sydney',
   currency_symbol: '$',
   currency_code: 'AUD'
 }
@@ -13,16 +14,32 @@ export const NavItems = [
     url: '/'
   },
   {
-    text: 'Events',
-    url: '/events'
-  },
-  {
     text: 'About',
     url: '/about-us'
   },
   {
+    text: 'Events',
+    url: '/events'
+  },
+  {
     text: 'Articles',
-    url: '/blog'
+    url: '/category/article'
+  },
+  {
+    text: 'Article Series',
+    url: '/category/series'
+  },
+  {
+    text: 'Photos of the Day',
+    url: '/category/photo-of-the-day'
+  },
+  {
+    text: 'Reviews',
+    url: '/category/review'
+  },
+  {
+    text: 'Tags',
+    url: '/tags'
   },
   {
     text: 'Contact',
@@ -30,21 +47,31 @@ export const NavItems = [
   }
 ]
 
-export const FooterMenu = [
+export const FooterMenu: {
+  title: string
+  links: {
+    text: string
+    url: string
+    icon?: string
+  }[]
+}[] = [
   {
     title: 'Helpful Links',
     links: [
       {
-        text: 'About',
-        url: '#'
+        text: 'About Us',
+        icon: 'i-fa6-solid-passport',
+        url: '/about-us'
       },
       {
-        text: 'Info',
-        url: '#'
+        text: 'Privacy',
+        icon: 'i-fa6-solid-user-lock',
+        url: '/privacy'
       },
       {
-        text: 'FAQ',
-        url: '#'
+        text: 'Contact Us',
+        icon: 'i-fa6-solid-bullhorn',
+        url: '/contact'
       }
     ]
   },

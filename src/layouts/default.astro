@@ -23,7 +23,9 @@ const { title, description } = Astro.props
     <link rel="manifest" href="/site.webmanifest" />
     <meta name="generator" content={Astro.generator} />
     <style is:inline>
-      [x-cloak] { display: none !important; }
+      [x-cloak] {
+        display: none !important;
+      }
     </style>
     <!-- <script is:inline src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script> -->
 
@@ -48,7 +50,6 @@ const { title, description } = Astro.props
 
       netlifyIdentity.on('init', (user) => {
         window.netlifyUser = user
-        console.log(user)
       })
       netlifyIdentity.on('close', () => window.location.reload())
       netlifyIdentity.init()
@@ -57,12 +58,31 @@ const { title, description } = Astro.props
         const status = document.getElementById('status')
         const manage = document.getElementById('manage')
 
-        status!.innerHTML = `${
-          window.netlifyUser.user_metadata.full_name
-        }<br />(${
-          window.netlifyUser.email
-        })`
-        manage!.innerText = "Manage membership"
+        status!.innerHTML = `${window.netlifyUser.user_metadata.full_name}<br />(${window.netlifyUser.email})`
+        manage!.innerText = 'Manage membership'
+
+        manage!.addEventListener('click', () => {
+          if (!window.netlifyUser) {
+            window.netlifyIdentity.open()
+          }
+
+          if (window.netlifyUser) {
+            fetch('/api/create-manage-link', {
+              method: 'POST',
+              headers: {
+                Authorization: `Bearer ${window.netlifyUser.token.access_token}`
+              },
+              body: JSON.stringify(window.netlifyUser)
+            })
+              .then((res) => res.json())
+              .then((link) => {
+                window.location.href = link
+              })
+              .catch((err) => console.error(err))
+          } else {
+            console.log('Need to login first')
+          }
+        })
       }
     </script>
   </body>

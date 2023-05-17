@@ -59,8 +59,27 @@ export default defineConfig({
     presetTypography()
   ],
   safelist: [
+    ...Array.from({ length: 3 }, (_, i) => `bg-gray-${i + 1}00`),
+    ...Array.from({ length: 3 }, (_, i) => `bg-red-${i + 1}00`),
+    ...Array.from({ length: 3 }, (_, i) => `bg-yellow-${i + 1}00`),
+    ...Array.from({ length: 3 }, (_, i) => `bg-green-${i + 1}00`),
+    ...Array.from({ length: 3 }, (_, i) => `bg-blue-${i + 1}00`),
+    ...Array.from({ length: 3 }, (_, i) => `bg-indigo-${i + 1}00`),
+    ...Array.from({ length: 3 }, (_, i) => `bg-purple-${i + 1}00`),
+    ...Array.from({ length: 3 }, (_, i) => `bg-pink-${i + 1}00`),
+    'text-xs',
+    'text-sm',
+    'text-base',
+    'text-lg',
+    'text-xl',
+    'text-2xl',
+    'text-3xl',
+    'text-4xl',
     'i-fa6-brands-facebook',
     'i-fa6-brands-instagram',
     'i-fa6-brands-twitter',
-  ],
+    'i-fa6-solid-bullhorn',
+    'i-fa6-solid-user-lock',
+    'i-fa6-solid-passport'
+  ]
 })

@@ -7,6 +7,8 @@ exports.handler = async (event: HandlerEvent) => {
 
   return {
     statusCode: 200,
-    body: JSON.stringify(products.data.filter(product => product.metadata.type == 'event'))
+    body: JSON.stringify(
+      products.data.filter((product) => product.metadata.type == 'event')
+    )
   }
 }

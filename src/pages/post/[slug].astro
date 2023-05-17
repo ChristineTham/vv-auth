@@ -1,0 +1,96 @@
+---
+export const prerender = true
+import type { CollectionEntry } from 'astro:content'
+import { getCollection } from 'astro:content'
+import Layout from '../../layouts/default.astro'
+
+// 1. Generate a new path for every collection entry
+export async function getStaticPaths() {
+  const blogEntries = await getCollection('post')
+  return blogEntries.map((post) => ({
+    params: { slug: post.slug },
+    props: { post }
+  }))
+}
+
+interface Props {
+  post: CollectionEntry<'post'>
+}
+
+const { post } = Astro.props
+const { Content } = await post.render()
+---
+
+<Layout title={post.data.title} description={post.data.description}>
+  <div
+    class={post.data.categories.includes('Photo of the Day')
+      ? 'relative h-full w-full'
+      : 'relative h-96'}>
+    <img src={post.data.image} class="w-full h-full object-cover" />
+  </div>
+
+  <div
+    class:list={[
+      'max-w-4xl mx-auto bg-white py-12 px-12 lg:px-24 relative z-10',
+      post.data.categories.includes('Photo of the Day') ? '' : '-mt-32'
+    ]}>
+    <div>
+      {
+        post.data.categories &&
+          post.data.categories.map((cat) => (
+            <span class="mr-2 p-1 bg-purple-700 text-white rounded text-sm font-bold">
+              {cat}
+            </span>
+          ))
+      }
+    </div>
+    <h1 class="font-display text-2xl md:text-3xl text-neutral-900 mt-4">
+      {post.data.title}
+    </h1>
+    <div class="mt-2 text-xs md:text-sm text-neutral-500">
+      <span class="h-4 w-4 i-fa6-solid-pen"></span>
+      {post.data.author}
+      <span class="ml-2 h-4 w-4 i-fa6-solid-clock"></span>
+      {
+        post.data.date.toLocaleString('en-AU', {
+          dateStyle: 'long',
+          timeStyle: 'long',
+          timeZone: 'Australia/NSW'
+        })
+      }
+    </div>
+    <div class="prose prose-sm sm:prose lg:prose-lg mt-6">
+      <Content />
+    </div>
+    <div class="pb-8">
+      {
+        post.data.tags &&
+          post.data.tags.map((tag) => (
+            <a
+              href={'/tag/' + tag}
+              class="mr-2 p-1 bg-purple-100 text-neutral-700 rounded text-sm">
+              #{tag}
+            </a>
+          ))
+      }
+    </div>
+    <div class="giscus"></div>
+  </div>
+  <script
+    src="https://giscus.app/client.js"
+    data-repo="ChristineTham/vv-auth"
+    data-repo-id="R_kgDOJhNiAw"
+    data-category="Announcements"
+    data-category-id="DIC_kwDOJhNiA84CWdT7"
+    data-mapping="pathname"
+    data-strict="0"
+    data-reactions-enabled="1"
+    data-emit-metadata="0"
+    data-input-position="bottom"
+    data-theme="light_protanopia"
+    data-lang="en"
+    data-loading="lazy"
+    crossorigin="anonymous"
+    async
+  ></script>
+</Layout>

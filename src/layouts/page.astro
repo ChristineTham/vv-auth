@@ -14,11 +14,11 @@ const { frontmatter } = Astro.props
 <Layout title={frontmatter.title} description={frontmatter.description}>
   <div class="text-center py-12 px-6 mt-12">
     <h1 class="font-display font-bold text-5xl mb-6">{frontmatter.title}</h1>
-    <p class="max-w-lg mx-auto">{frontmatter.description}</p>
+    <p class="max-w-lg mx-auto italic">{frontmatter.description}</p>
   </div>
 
   <div
-    class="prose prose-sm sm:prose lg:prose-lg mt-6 text-center mx-auto pb-24 px-6">
+    class="max-w-4xl prose prose-sm sm:prose lg:prose-lg mt-6 mx-auto pb-24 px-6">
     <slot />
   </div>
 </Layout>

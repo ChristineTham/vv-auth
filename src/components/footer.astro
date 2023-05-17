@@ -11,26 +11,32 @@ import { Settings, FooterMenu, Copyright } from '../config'
         {
           Settings.logo ? (
             <img
-            src={Settings.logo.src}
-            alt="Logo"
-            class="w-full object-contain object-center"
+              src={Settings.logo.src}
+              alt="Logo"
+              class="w-full object-contain object-center"
             />
-            ) :
+          ) : (
             Settings.site_name
+          )
         }
       </div>
     </div>
     <div>
-      <div id="status" class="font-display text-white text-sm tracking-widest mb-6">
+      <div
+        id="status"
+        class="font-display text-white text-sm tracking-widest mb-6">
         Not logged in
       </div>
-      <button id="manage" class="block mb-4">
-        Login/signup
-      </button>
+      <div class="block mb-4">
+        <span class="w-6 h-6 i-fa6-solid-id-card"></span>
+        <button id="manage">Login/signup</button>
+      </div>
       <a href="/rss.xml" class="block mb-4">
+        <span class="w-6 h-6 i-fa6-solid-rss"></span>
         RSS
       </a>
       <a href="/sitemap-index.xml" class="block mb-4">
+        <span class="w-6 h-6 i-fa6-solid-sitemap"></span>
         Sitemap
       </a>
     </div>
@@ -42,9 +48,7 @@ import { Settings, FooterMenu, Copyright } from '../config'
           </div>
           {section.links.map((item) => (
             <a href={item.url} class="block mb-4">
-              {item.icon && 
-                <span class:list={['w-6 h-6', item.icon]} />
-              }
+              {item.icon && <span class:list={['w-6 h-6', item.icon]} />}
               {item.text}
             </a>
           ))}

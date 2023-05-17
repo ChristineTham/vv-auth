@@ -1,41 +1,41 @@
 ---
 export const prerender = true
-import { getCollection } from 'astro:content'
 import { Image } from 'astro:assets'
 import Layout from '../layouts/default.astro'
+import Banner from '../components/banner.astro'
+import POTD from '../components/potd.astro'
+import LatestArticle from '../components/latestarticle.astro'
+import LatestReview from '../components/latestreview.astro'
+import CategoryGrid from '../components/categorygrid.astro'
+import CTA from '../components/cta.astro'
 
-import image from '../assets/titleimage.jpg'
-import full_screen_image from '../assets/full_screen.jpg'
-import footer_cta_image from '../assets/cta.jpg'
-
-const blogs = await getCollection('blog')
-const sortedBlogs = blogs.sort((a, b) => +b.data.date - +a.data.date)
-const categories = await getCollection('category')
+import image from '../assets/Penang.jpeg'
 
 const title = 'world travel and photography'
-const button_text = 'Read our articles'
-const button_link = '/blog/'
+const text =
+  'We are passionate photographers and this site showcases our images, articles as well as occasional reviews of equipment and services.'
+const button_text = 'Explore Content'
+const button_link = '/posts'
 const link_one = '/about-us'
 const link_one_text = 'Find out more'
 const link_two = '/contact'
 const link_two_text = 'Get in touch'
-const cta_title = 'We love to travel'
-const cta_description =
-  'Explore the world through photography. We are passionate photographers and world travellers and this site showcases our work. Become a member / supporter and access additional features.'
-const footer_cta_title = 'Become a member!'
-const footer_cta_description =
-  'Join our community and become a member or site supporter!'
-const footer_cta_button_text = 'Find out more'
-const footer_cta_button_link = '/membership'
 ---
 
 <Layout>
   <div class="-mt-24 relative w-full py-12 px-12 bg-neutral-800">
-    <div class="relative z-10 text-center py-24 md:py-48">
+    <div class="relative z-10 text-center py-12 md:py-24">
+      <Banner link="Read more" href="/post/new-site">
+        Welcome to the new version of Visual Voyager!
+      </Banner>
       <h1
-        class="text-white text-center text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-display font-bold mb-12">
+        class="text-white text-center text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-display font-bold mb-6">
         {title}
       </h1>
+      <p
+        class="max-w-xl mx-auto text-white text-center text-base md:text-xl italic mb-12">
+        {text}
+      </p>
       <a
         href={button_link}
         class="inline-block bg-purple-800 text-white uppercase text-sm tracking-widest font-heading px-8 py-4"
@@ -56,127 +56,9 @@ const footer_cta_button_link = '/membership'
     />
   </div>
 
-  {
-    sortedBlogs.slice(0, 1).map((post) => (
-      <div class="grid grid-cols-1 md:grid-cols-2">
-        <div class="bg-white p-12 md:p-24 flex justify-end items-center">
-          <a href={'/blog/' + post.slug}>
-            <img src={post.data.image} class="w-full max-w-md" />
-          </a>
-        </div>
-
-        <div class="bg-gray-100 p-12 md:p-24 flex justify-start items-center">
-          <div class="max-w-md">
-            <div class="w-24 h-2 bg-purple-800 mb-4" />
-            <h2 class="font-display font-bold text-2xl md:text-3xl lg:text-4xl mb-6">
-              {post.data.title}
-            </h2>
-            <p class="font-light text-gray-600 text-sm md:text-base mb-6 leading-relaxed">
-              {post.data.description}
-            </p>
-            <a
-              href={'/blog/' + post.slug}
-              class="inline-block border-2 border-purple-800 font-light text-purple-800 text-sm uppercase tracking-widest py-3 px-8 hover:bg-purple-800 hover:text-white">
-              Read more
-            </a>
-          </div>
-        </div>
-      </div>
-    ))
-  }
-
-  {
-    full_screen_image && (
-      <Image
-        src={full_screen_image}
-        class="w-full h-screen object-cover"
-        alt="Full Screen"
-      />
-    )
-  }
-
-  {
-    cta_title && (
-      <div class="max-w-xl mx-auto text-center py-24 md:py-32">
-        <div class="w-24 h-2 bg-purple-800 mb-4 mx-auto" />
-        <h2 class="font-display font-bold text-3xl md:text-4xl lg:text-5xl mb-6">
-          {cta_title}
-        </h2>
-        <p class="font-light text-gray-600 mb-6 leading-relaxed">
-          {cta_description}
-        </p>
-      </div>
-    )
-  }
-
-  <div class="flex flex-wrap bg-black">
-    {
-      categories.slice(0, 3).map((category) => (
-        <a
-          href={'/category/' + category.slug}
-          class="bg-black relative w-full md:w-auto md:flex-1 flex items-center justify-center h-72 font-heading text-white uppercase tracking-widest hover:opacity-75">
-          <div class="relative z-10">{category.data.title}</div>
-          <img
-            src={category.data.image}
-            class="absolute inset-0 w-full h-full object-cover opacity-50"
-          />
-        </a>
-      ))
-    }
-  </div>
-
-  {
-    sortedBlogs.slice(1, 2).map((post) => (
-      <div class="grid grid-cols-1 md:grid-cols-2">
-        <div class="bg-white p-12 md:p-24 flex justify-start items-center">
-          <a href={'/blog/' + post.slug}>
-            <img src={post.data.image} class="w-full max-w-md" />
-          </a>
-        </div>
-
-        <div class="md:order-first bg-gray-100 p-12 md:p-24 flex justify-end items-center">
-          <div class="max-w-md">
-            <div class="w-24 h-2 bg-purple-800 mb-4" />
-            <h2 class="font-display font-bold text-2xl md:text-3xl lg:text-4xl mb-6">
-              {post.data.title}
-            </h2>
-            <p class="font-light text-gray-600 text-sm md:text-base mb-6 leading-relaxed">
-              {post.data.description}
-            </p>
-            <a
-              href={'/blog/' + post.slug}
-              class="inline-block border-2 border-purple-800 font-light text-purple-800 text-sm uppercase tracking-widest py-3 px-8 hover:bg-purple-800 hover:text-white">
-              Read more
-            </a>
-          </div>
-        </div>
-      </div>
-    ))
-  }
-
-  {
-    footer_cta_image && (
-      <div class="relative w-full py-12 px-12">
-        <div class="relative z-10 text-center py-12 md:py-24">
-          <h1 class="text-white text-center text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-display font-bold mb-6">
-            {footer_cta_title}
-          </h1>
-          <p class="text-white mb-10 text-base md:text-lg font-bold">
-            {footer_cta_description}
-          </p>
-          <a
-            href={footer_cta_button_link}
-            class="inline-block bg-purple-800 text-white uppercase text-sm tracking-widest font-heading px-8 py-4">
-            {footer_cta_button_text}
-          </a>
-        </div>
-
-        <Image
-          src={footer_cta_image}
-          class="w-full h-full absolute inset-0 object-cover"
-          alt="CTA"
-        />
-      </div>
-    )
-  }
+  <POTD />
+  <LatestArticle />
+  <LatestReview />
+  <CategoryGrid />
+  <CTA />
 </Layout>

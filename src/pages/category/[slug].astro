@@ -1,7 +1,10 @@
 ---
+import { Image } from 'astro:assets'
+
 export const prerender = true
 import { getCollection } from 'astro:content'
 import Layout from '../../layouts/default.astro'
+import Posts from '../../components/posts.astro'
 
 // 1. Generate a new path for every collection entry
 export async function getStaticPaths() {
@@ -16,67 +19,32 @@ export async function getStaticPaths() {
 const { entry } = Astro.props
 const { Content } = await entry.render()
 
-const blogs = await getCollection('blog')
-const category = blogs
-  .filter((post) => post.data.category == entry.data.title)
+const articles = await getCollection('post')
+const category = articles
+  .filter((post) => post.data.categories.includes(entry.data.title))
   .sort((a, b) => +b.data.date - +a.data.date)
 ---
 
-<Layout title={entry.data.title} description={entry.data.description}>
-  <div class="text-center py-12 px-6 mt-12">
-    <h1 class="font-display font-bold text-5xl mb-6">{entry.data.title}</h1>
+<Layout
+  title={entry.data.plural || entry.data.title}
+  description={entry.data.description}>
+  <div class="relative h-96">
+    <Image
+      src={entry.data.image}
+      alt={entry.data.title}
+      class="w-full h-full object-cover"
+    />
+  </div>
+
+  <div
+    class="max-w-4xl mx-auto bg-white py-12 px-12 lg:px-24 -mt-32 relative z-10">
+    <h1 class="font-display font-bold text-5xl mb-6">
+      {entry.data.plural || entry.data.title}
+    </h1>
     <p class="max-w-lg mx-auto">{entry.data.description}</p>
   </div>
   <div class="prose prose-sm sm:prose lg:prose-lg mt-6">
     <Content />
   </div>
-  <div
-    class="container mx-auto px-6 grid grid-cols-1 lg:grid-cols-2 gap-12 pt-12 pb-24">
-    {
-      category.map((post) => (
-        <div>
-          <a href={'/blog/' + post.slug}>
-            <img
-              src={post.data.image}
-              alt={post.data.title}
-              class="w-full h-52 md:h-64 lg:h-96 xl:h-64 object-cover"
-            />
-          </a>
-
-          <div class="bg-gray-50 p-8">
-            <div class="text-xs text-gray-600 uppercase font-semibold">
-              {post.data.date.toLocaleString('en-AU', {
-                dateStyle: 'long',
-                timeZone: 'Australia/NSW'
-              })}
-            </div>
-            <h2 class="mt-3 text-3xl mb-6 font-display text-black leading-tight max-w-sm">
-              {post.data.title || 'Untitled'}
-            </h2>
-            {post.data.description && (
-              <p class="mt-4 max-w-md">{post.data.description}</p>
-            )}
-            <a
-              href={'/blog/' + post.slug}
-              class="flex items-center mt-6 uppercase text-sm text-black font-semibold">
-              Read article
-              <svg
-                class="w-4 h-4 ml-2"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-                xmlns="http://www.w3.org/2000/svg">
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="1"
-                  d="M9 5l7 7-7 7"
-                />
-              </svg>
-            </a>
-          </div>
-        </div>
-      ))
-    }
-  </div>
+  <Posts posts={category} />
 </Layout>

@@ -1,0 +1,20 @@
+---
+interface Props {
+  link?: string
+  href?: string
+}
+
+const { link, href } = Astro.props
+---
+
+<div
+  class="bg-purple bg-opacity-50 text-white text-xs text-center uppercase tracking-widest py-2">
+  <slot />
+  {
+    link && (
+      <a href={href} class="ml-2 underline">
+        {link}
+      </a>
+    )
+  }
+</div>
