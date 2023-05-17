@@ -1,0 +1,96 @@
+---
+import { Image } from 'astro:assets'
+import type { ImageMetadata } from 'astro'
+import 'photoswipe/style.css'
+import 'photoswipe-dynamic-caption-plugin/photoswipe-dynamic-caption-plugin.css'
+
+export interface Props {
+  id: string
+  images: {
+    file: string,
+    title: string,
+    image: ImageMetadata,
+    exif: Record<string, any>
+  }[]
+}
+
+const { id, images } = Astro.props
+---
+
+<style>
+  .pswp--custom-icon-colors {
+      --pswp-icon-color: #eee;
+      --pswp-icon-color-secondary: #663399;
+  }
+
+  .pswp__dynamic-caption--aside {
+      max-width: 300px;
+      padding: 20px 15px 20px 20px;
+      margin-top: 70px;
+  }
+
+  .pswp__dynamic-caption--below {
+      max-width: 700px;
+      padding: 15px 0 0;
+  }
+
+  .pswp__dynamic-caption--mobile {
+      background: rgba(0, 0, 0, 0.5);
+      padding: 10px 15px;
+  }
+</style>
+<lightbox-inner data-id={id}>
+  {images.map(image => (
+    <figure itemscope itemtype="http://schema.org/ImageObject" class="inline-block text-neutral-800 bg-neutral-300 hover:bg-pink-200 text-sm text-center italic rounded shadow-lg shadow-neutral-400 dark:shadow-black my-1 lg:my-2">
+      <a
+        href={image.image.src}
+        itemprop="contentUrl"
+        data-pswp-width={image.image.width}
+        data-pswp-height={image.image.height}
+      >
+        <Image src={image.image} alt={image.title} width={600} class="rounded" />
+        <span class="pswp-caption-content">
+          {image.title}
+          {image.exif && <span>{' (' + image.exif.Make + ' ' + image.exif.Model  + ')'}</span>}
+        </span>
+      </a>
+      <figcaption itemprop="caption description" class="rounded">
+        {image.title}
+      </figcaption>
+    </figure>            
+  ))}
+</lightbox-inner>
+<script>
+  import PhotoSwipeLightbox from 'photoswipe/lightbox'
+  import PhotoSwipe from 'photoswipe'
+  import PhotoSwipeDynamicCaption from 'photoswipe-dynamic-caption-plugin'
+
+  class LightboxInner extends HTMLElement {
+    constructor() {
+      super()
+
+      const id = this.dataset.id;
+
+      const lightbox = new PhotoSwipeLightbox({
+        mainClass: 'pswp--custom-icon-colors',
+        gallerySelector: '#' + id,
+        childSelector: 'a',
+        pswpModule: () => PhotoSwipe,
+        paddingFn: () => {
+          return {
+            top: 0, bottom: 30, left: 0, right: 0
+          }
+        }
+      })
+      
+      new PhotoSwipeDynamicCaption(lightbox, {
+        captionContent: '.pswp-caption-content',
+        type: 'below',
+      });
+      
+      lightbox.init()
+    }
+  }
+
+  customElements.define('lightbox-inner', LightboxInner);
+</script>

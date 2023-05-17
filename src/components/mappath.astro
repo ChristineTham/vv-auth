@@ -1,0 +1,40 @@
+---
+export interface Props {
+  points?: {
+    title: string
+    latlng: number[]
+  }
+}
+
+const { points } = Astro.props
+---
+<link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+<script is:inline src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+<map-inner data-points={JSON.stringify(points)} ></map-inner>
+<div id="map" class="mb-3 h-screen"></div>
+<script is:inline>
+  class MapInner extends HTMLElement {
+    constructor() {
+      super()
+
+      const points = JSON.parse(this.dataset.points)
+
+      if (points) {
+        const map = L.map('map', { scrollWheelZoom: false, zoomSnap: 1.1 }).setView(points[0].latlng, 10)
+        const polyline = L.polyline(points.map(point => point.latlng), {color: 'purple'}).addTo(map)
+        points.map(point => L.marker(point.latlng).addTo(map).bindPopup(point.title))
+  
+        // zoom the map to the polyline
+        map.fitBounds(polyline.getBounds())
+  
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+          maxZoom: 19,
+          attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+        }).addTo(map)
+      }
+
+    }
+  }
+
+  customElements.define('map-inner', MapInner);
+</script>

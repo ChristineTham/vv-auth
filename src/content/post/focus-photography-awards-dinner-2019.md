@@ -15,6 +15,7 @@ tags:
   - event
   - Focus
   - Sydney
+gallery: (default)
 ---
 
 The Focus Awards are held annually to celebrate the best talent in the Focus Photographers Group. Submitted images are judged by a panel of industry professionals and awards are presented in various categories with Image of the Year and Photographer of the Year the highest accolades. The annual dinner is the marquee event of the year and brings members together to celebrate the year, and congratulate the winners. I attended the dinner as a guest for one of the sponsors of the event Mainline Photographics.

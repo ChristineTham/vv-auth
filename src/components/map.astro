@@ -1,0 +1,34 @@
+---
+// import 'leaflet/dist/leaflet.css'
+export interface Props {
+  text: string
+  lat: number
+  lng: number
+  zoom: number
+}
+
+const { text, lat, lng, zoom } = Astro.props
+---
+<link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+<script is:inline src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+<map-inner data-text={text} data-lat={lat} data-lng={lng} data-zoom={zoom}></map-inner>
+<div id="map" class="mb-3 h-96"></div>
+<script is:inline>
+  class MapInner extends HTMLElement {
+    constructor() {
+      super()
+
+      const loc = [Number(this.dataset.lat), Number(this.dataset.lng)]
+
+      var map = L.map('map', { scrollWheelZoom: false }).setView(loc, Number(this.dataset.zoom))
+      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        maxZoom: 19,
+        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+      }).addTo(map)
+      var marker = L.marker(loc).addTo(map)
+      marker.bindPopup(this.dataset.text || 'Location').openPopup()
+    }
+  }
+
+  customElements.define('map-inner', MapInner);
+</script>

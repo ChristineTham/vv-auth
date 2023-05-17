@@ -1,0 +1,209 @@
+---
+import type { ImageMetadata } from 'astro'
+import { SEO } from 'astro-seo'
+import type {
+  Article,
+  BreadcrumbList,
+  Organization,
+  Person,
+  WebSite,
+  WithContext,
+} from 'schema-dts'
+
+import { Settings } from '../config'
+
+export interface Props {
+  author: string
+  title: string
+  description: string
+  date: Date
+  image: ImageMetadata
+  tags?: string[]
+}
+
+const { author, title, description, date, tags, image } = Astro.props
+
+const siteurl = new URL(import.meta.env.BASE_URL, Astro.url)
+const type = Astro.url.toString().includes('blog') ? 'post' : 'page'
+const year = Settings.buildTime.getFullYear()
+
+const openGraph = {
+  basic: {
+    title: title,
+    type: 'website',
+    image: new URL(image.src, siteurl).toString(),
+  },
+  optional: {
+    description: description,
+    siteName: Settings.site_name,
+  },
+  image: {
+    alt: title,
+    width: image.width,
+    height: image.height,
+  },
+  article: {
+    author: author,
+    publishedTime: Settings.buildTime.toISOString(),
+    tags: tags,
+  },
+}
+const twitter = {
+  card: 'summary_large_image',
+  site: SiteMetadata.org.twitter,
+  creator: SiteMetadata.author.twitter,
+}
+
+const website: WithContext<WebSite> = {
+  '@context': 'https://schema.org',
+  '@type': 'WebSite',
+  about: {
+    '@id': new URL('about', siteurl).toString(),
+  },
+  audience: 'public',
+  abstract: SiteMetadata.description,
+  author: {
+    '@id': SiteMetadata.author.url,
+  },
+  copyrightHolder: {
+    '@id': SiteMetadata.org.url,
+  },
+  copyrightYear: year,
+  creator: {
+    '@id': SiteMetadata.author.url,
+  },
+  description: SiteMetadata.description,
+  image: {
+    '@type': 'ImageObject',
+    url: new URL(image.src, siteurl).toString()
+  },
+  inLanguage: 'en',
+  name: SiteMetadata.title,
+  publisher: {
+    '@id': SiteMetadata.org.url,
+  },
+  url: siteurl.toString(),
+}
+
+const organization: WithContext<Organization> = {
+  '@context': 'https://schema.org',
+  '@id': SiteMetadata.org.url,
+  '@type': 'Organization',
+  address: SiteMetadata.location,
+  contactPoint: {
+    '@type': 'ContactPoint',
+    email: SiteMetadata.org.email,
+  },
+  description: SiteMetadata.org.summary,
+  email: SiteMetadata.org.email,
+  founder: {
+    '@id': SiteMetadata.author.url,
+  },
+  location: SiteMetadata.location,
+  // image: {
+  //   '@type': 'ImageObject',
+  //   url: logo,
+  // },
+  // logo: {
+  //   '@type': 'ImageObject',
+  //   url: logo,
+  // },
+  name: SiteMetadata.org.name,
+  sameAs: Object.values(SiteMetadata.social.map(social => social.link)),
+  url: SiteMetadata.org.url,
+}
+
+const breadcrumbList: WithContext<BreadcrumbList> = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  description: 'Breadcrumbs list',
+  itemListElement: [
+    {
+      '@type': 'ListItem',
+      item: {
+        '@id': siteurl.toString(),
+        name: SiteMetadata.title,
+      },
+      position: 1,
+    },
+    {
+      '@type': 'ListItem',
+      item: {
+        '@id': Astro.url.toString(),
+        name: title,
+      },
+      position: 2,
+    },
+  ],
+  numberOfItems: 2,
+  name: 'Breadcrumbs',
+}
+
+const person: WithContext<Person> = {
+  '@context': 'https://schema.org',
+  '@type': 'Person',
+  '@id': SiteMetadata.author.url,
+  name: SiteMetadata.author.name,
+  url: SiteMetadata.author.url,
+  worksFor: {
+    '@id': SiteMetadata.org.url,
+  },
+}
+
+const article: WithContext<Article> = {
+  '@context': 'https://schema.org',
+  '@type': 'Article',
+  articleSection: type,
+  author: {
+    '@id': SiteMetadata.author.url,
+  },
+  copyrightHolder: {
+    '@id': SiteMetadata.org.url,
+  },
+  copyrightYear: year,
+  creativeWorkStatus: 'Published',
+  creator: {
+    '@id': SiteMetadata.author.url,
+  },
+  dateCreated: date.toISOString(),
+  dateModified: SiteMetadata.buildTime.toISOString(),
+  datePublished: date.toISOString(),
+  description: description,
+  headline: title,
+  keywords: tags && tags.join(', '),
+  image: {
+    '@type': 'ImageObject',
+    url: new URL(image.src, siteurl).toString(),
+  },
+  inLanguage: 'en',
+  mainEntityOfPage: SiteMetadata.org.url,
+  name: title,
+  publisher: {
+    '@id': SiteMetadata.org.url,
+  },
+  url: siteurl.toString(),
+}
+---
+
+<SEO
+  title={SiteMetadata.title + ' | ' + title}
+  description={description}
+  {openGraph}
+  {twitter}
+/>
+<script is:inline set:html={JSON.stringify(website)} type="application/ld+json"
+></script>
+<script
+  is:inline
+  set:html={JSON.stringify(organization)}
+  type="application/ld+json"
+></script>
+<script
+  is:inline
+  set:html={JSON.stringify(breadcrumbList)}
+  type="application/ld+json"
+></script>
+<script is:inline set:html={JSON.stringify(person)} type="application/ld+json"
+></script>
+<script is:inline set:html={JSON.stringify(article)} type="application/ld+json"
+></script>

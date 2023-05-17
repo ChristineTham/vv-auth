@@ -9,26 +9,30 @@ public_folder: "../../assets/images"
 local_backend: true
 # publish_mode: editorial_workflow
 collections:
-  - label: "Blog"
-    name: "blog"
-    folder: "src/content/blog"
+  - label: "Posts"
+    name: "post"
+    folder: "src/content/post"
     create: true
     editor:
       preview: true
     fields:
+      - { label: "Draft", name: "draft", widget: "boolean", required: false }
       - { label: "Title", name: "title", widget: "string" }
       - { label: "Description", name: "description", widget: "string" }
-      - { label: "Image", name: "image", widget: "image" }
+      - { label: "Image", name: "image", widget: "image", required: false }
       - { label: "Publish Date", name: "date", widget: "datetime" }
-      - label: "Category"
-        name: "category"
-        widget: "relation"
-        collection: "category"
-        search_fields: ["title"]
-        value_field: "title"
-        required: false
-        display_fields: ["title"]
+      - { label: "Categories", name: "category", widget: "list" }
+      # - label: "Category"
+      #   name: "category"
+      #   widget: "relation"
+      #   collection: "category"
+      #   search_fields: ["title"]
+      #   value_field: "title"
+      #   required: false
+      #   display_fields: ["title"]
+      - { label: "Tags", name: "tags", widget: "list", required: false }
       - { label: "Geo location", name: "geo", widget: "map" }
+      - { label: "Gallery", name: "gallery", widget: "string", required: false, hint: "(default) will select a gallery with same name as post slug" }
       - { label: "Body", name: "body", widget: "markdown" }
   - label: "Categories"
     name: "category"
@@ -38,8 +42,20 @@ collections:
       preview: false
     fields:
       - { label: "Title", name: "title", widget: "string" }
+      - { label: "Plural Title", name: "plural", widget: "string", required: false }
       - { label: "Description", name: "description", widget: "string", required: false }
       - { label: "Image", name: "image", widget: "image" }
+  - label: "Authors"
+    name: "author"
+    folder: "src/content/author"
+    create: true
+    editor:
+      preview: false
+    fields:
+      - { label: "Title", name: "title", widget: "string" }
+      - { label: "Description", name: "description", widget: "string", required: false }
+      - { label: "Image", name: "image", widget: "image" }
+      - { label: "Website", name: "website", widget: "string", required: false }
   - label: "Pages"
     name: "page"
     folder: "src/pages"

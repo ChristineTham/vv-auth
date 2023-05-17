@@ -12,7 +12,8 @@ const postCollection = defineCollection({
     image: z.string().optional(),
     categories: z.array(z.string()),
     tags: z.array(z.string()).optional(),
-    geo: z.string().optional()
+    geo: z.string().optional(),
+    gallery: z.string().optional()
   })
 })
 
@@ -21,7 +22,7 @@ const categoryCollection = defineCollection({
     z.object({
       title: z.string(),
       plural: z.string().optional(),
-      description: z.string(),
+      description: z.string().optional(),
       image: image()
     })
 })

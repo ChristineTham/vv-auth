@@ -5,7 +5,8 @@ export const Settings = {
   logo: logo,
   timezone: 'Australia/Sydney',
   currency_symbol: '$',
-  currency_code: 'AUD'
+  currency_code: 'AUD',
+  buildTime: new Date()
 }
 
 export const NavItems = [

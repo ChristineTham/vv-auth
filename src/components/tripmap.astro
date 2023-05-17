@@ -1,0 +1,17 @@
+---
+import { getCollection } from 'astro:content'
+// @ts-ignore 
+import Mappath from 'astro-travelens/mappath'
+
+const posts = await getCollection('post', ({ data }) => {
+  return data.draft !== true;
+})
+
+const points = posts
+    .sort((a, b) => +a.data.date - +b.data.date)
+    .map((post) => (post.data.geo && {
+      title: post.data.title,
+      latlng: [post.data.map[0], post.data.map[1]],
+  }))
+---
+<Mappath points={points} />
