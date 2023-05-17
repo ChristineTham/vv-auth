@@ -7,6 +7,7 @@ import { Settings, NavItems } from '../config'
     <!-- menu button -->
     <button x-on:click="showMenu = true">
       <span class="w-8 h-8 text-white i-fa6-solid-bars"></span>
+      <span class="sr-only">Menu</span>
     </button>
 
     <div
@@ -30,7 +31,7 @@ import { Settings, NavItems } from '../config'
               stroke-width="2"
               d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"
             ></path></svg>
-            <span class="sr-only">Menu</span>
+            <span class="sr-only">Close</span>
         </button>
         {
           NavItems.map((item) => (
