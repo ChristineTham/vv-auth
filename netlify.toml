@@ -18,19 +18,6 @@
   force = true # ensure to always redirect
 
 [[redirects]]
-  from = "/admin/*"
-  to = "/admin/:splat"
-  force = true
-  status = 200
-  conditions = {Role = ["editor", "admin"]}
-
-[[redirects]]
-  from = "/admin/*"
-  to = "/"
-  force = true
-  status = 401
-
-[[redirects]]
   from = "/member/*"
   to = "/member/:splat"
   force = true
