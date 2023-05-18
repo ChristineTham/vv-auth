@@ -1,7 +1,11 @@
 import lunr from 'lunr'
 import { getCollection } from 'astro:content'
 
-const posts = await getCollection('post', ({ data }) => data.draft !== true)
+const posts = await getCollection(
+  'post',
+  ({ data }) =>
+    data.draft !== true && !data.categories.includes('Member Exclusive')
+)
 
 const options = { keys: ['title', 'description', 'body'] }
 

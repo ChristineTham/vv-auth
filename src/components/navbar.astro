@@ -1,5 +1,6 @@
 ---
 import { Settings, NavItems } from '../config'
+import Search from './search.astro'
 ---
 
 <div class="h-24 z-50 relative container mx-auto px-6 grid grid-cols-3">
@@ -43,6 +44,10 @@ import { Settings, NavItems } from '../config'
             </a>
           ))
         }
+        <div
+          data-netlify-identity-button
+          class="inline-block border-b-4 border-transparent hover:border-purple-900">
+        </div>
       </div>
       <div class="absolute inset-0 w-full h-full bg-purple-900 bg-opacity-20">
       </div>
@@ -57,7 +62,7 @@ import { Settings, NavItems } from '../config'
           <img
             src={Settings.logo.src}
             alt="Logo"
-            class="h-16 w-full object-contain object-center"
+            class="h-10 lg:h-16 w-full object-contain object-center"
           />
         ) : (
           Settings.site_name
@@ -67,10 +72,11 @@ import { Settings, NavItems } from '../config'
   </div>
 
   <div class="flex items-center justify-end">
-    <!-- <div data-netlify-identity-menu class="text-white"></div> -->
+    <!-- <div data-netlify-identity-menu class="text-white"></div>
     <div data-netlify-identity-button class="text-white">
       <span class="w-8 h-8 text-white i-fa6-solid-circle-user mr-1"></span>
-    </div>
+    </div> -->
+    <Search />
   </div>
 </div>
 
