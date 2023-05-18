@@ -1,7 +1,11 @@
 import { Settings } from '../config.ts'
 import { getCollection } from 'astro:content'
 
-const posts = await getCollection('post', ({ data }) => data.draft !== true)
+const posts = await getCollection(
+  'post',
+  ({ data }) =>
+    data.draft !== true && !data.categories.includes('Member Exclusive')
+)
 const sortedPosts = posts.sort((a, b) => +b.data.date - +a.data.date)
 
 export async function get() {
@@ -23,15 +27,12 @@ ${sortedPosts
   .map(
     (post) => `    <item>
       <title>${post.data.title}</title>
-      <link>${new URL(post.slug, import.meta.env.SITE).toString()}</link>
+      <link>${new URL(
+        '/post/' + post.slug,
+        import.meta.env.SITE
+      ).toString()}</link>
       <author>${post.data.author})</author>
       <description>${post.data.description}</description>
-      <media:content URL="${new URL(
-        post.data.image.src,
-        import.meta.env.SITE
-      ).toString()}" type="image/jpeg" medium="image" height="${
-      post.data.image.height
-    }" width="${post.data.image.width}"/>
       <pubDate>${post.data.date}</pubDate>
       <guid>${new URL(post.slug, import.meta.env.SITE).toString()}</guid>
     </item>`
@@ -42,3 +43,9 @@ ${sortedPosts
 `
   }
 }
+// <media:content URL="${new URL(
+//   post.data.image.src,
+//   import.meta.env.SITE
+// ).toString()}" type="image/jpeg" medium="image" height="${
+// post.data.image.height
+// }" width="${post.data.image.width}"/>
