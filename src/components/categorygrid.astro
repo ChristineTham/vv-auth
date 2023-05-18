@@ -6,30 +6,44 @@ const categories = await getCollection('category')
 ---
 
 <div class="grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 bg-neutral-500">
-  <a
-    href="/events/"
-    class="bg-black relative w-full md:w-auto md:flex-1 flex items-center justify-center h-72 font-heading text-white uppercase tracking-widest hover:opacity-75 hover:bg-purple">
-    <div class="relative z-10">Events</div>
-    <Image
-      src={eventImage}
-      alt="Events"
-      class="absolute inset-0 w-full h-full object-cover opacity-50"
-    />
-  </a>
+  <div
+    itemprop="mainEntity"
+    itemscope
+    itemtype="https://schema.org/CollectionPage">
+    <a
+      itemprop="url"
+      href="/events/"
+      class="bg-black relative w-full md:w-auto md:flex-1 flex items-center justify-center h-72 font-heading text-white uppercase tracking-widest hover:opacity-75 hover:bg-purple">
+      <div itemprop="name" class="relative z-10">Events</div>
+      <Image
+        itemprop="image"
+        src={eventImage}
+        alt="Events"
+        class="absolute inset-0 w-full h-full object-cover opacity-50"
+      />
+    </a>
+  </div>
   {
     categories.map((category) => (
-      <a
-        href={'/category/' + category.slug}
-        class="bg-black relative w-full md:w-auto md:flex-1 flex items-center justify-center h-72 font-heading text-white uppercase tracking-widest hover:opacity-75 hover:bg-purple">
-        <div class="relative z-10">
-          {category.data.plural || category.data.title}
-        </div>
-        <Image
-          src={category.data.image}
-          alt={category.data.title}
-          class="absolute inset-0 w-full h-full object-cover opacity-50"
-        />
-      </a>
+      <div
+        itemprop="mainEntity"
+        itemscope
+        itemtype="https://schema.org/CollectionPage">
+        <a
+          itemprop="url"
+          href={'/category/' + category.slug}
+          class="bg-black relative w-full md:w-auto md:flex-1 flex items-center justify-center h-72 font-heading text-white uppercase tracking-widest hover:opacity-75 hover:bg-purple">
+          <div itemprop="name" class="relative z-10">
+            {category.data.plural || category.data.title}
+          </div>
+          <Image
+            itemprop="image"
+            src={category.data.image}
+            alt={category.data.title}
+            class="absolute inset-0 w-full h-full object-cover opacity-50"
+          />
+        </a>
+      </div>
     ))
   }
 </div>

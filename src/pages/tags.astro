@@ -2,7 +2,7 @@
 import { Image } from 'astro:assets'
 import { getCollection } from 'astro:content'
 import Layout from '../layouts/default.astro'
-import Cover from '../assets/tags.jpeg'
+import image from '../assets/tags.jpeg'
 
 const posts = await getCollection('post', ({ data }) => data.draft !== true)
 const tags = posts
@@ -32,19 +32,28 @@ const maxcount =
   ]
 ---
 
-<Layout title="Tags" description="Index of all tags">
+<Layout
+  title="Tags"
+  description="Index of all tags"
+  {image}
+  schema="CollectionPage">
   <div class="-mt-24 relative w-full h-screen py-6 px-6 bg-black">
     <!-- hero section -->
     <div class="relative z-10 text-center">
       <h1
-        class="text-white text-center text-6xl font-display font-bold mt-24 mb-6">
+        class="text-white text-center text-6xl font-display font-bold mt-24 mb-6"
+        itemprop="name">
         Tags
       </h1>
       <ul class="flex justify-center flex-wrap align-center leading-10">
         {
           Object.keys(tagcount).map((tag) => (
-            <li>
+            <li
+              itemprop="mainEntity"
+              itemscope
+              itemtype="https://schema.org/CollectionPage">
               <a
+                itemprop="url name"
                 href={'/tag/' + encodeURIComponent(tag)}
                 class:list={[
                   'text-black m-2 p-1 hover:p-2 hover:m-1 hover-shadow-neutral-700 shadow-lg shadow-neutral-500 rounded-full',
@@ -67,7 +76,7 @@ const maxcount =
 
     <!-- banner image -->
     <Image
-      src={Cover}
+      src={image}
       class="h-full absolute inset-0 object-cover opacity-70"
       alt="Cover"
     />

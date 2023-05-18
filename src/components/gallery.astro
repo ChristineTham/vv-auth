@@ -9,31 +9,48 @@ export interface Props {
 const { folder } = Astro.props
 console.log(Astro.url.pathname.split('/').reverse()[0])
 
-const imageFiles = import.meta.glob<ImageMetadata>('../assets/gallery/**/*.{png,webp,jpg,jpeg}', { import: 'default', eager: true })
+const imageFiles = import.meta.glob<ImageMetadata>(
+  '../assets/gallery/**/*.{png,webp,jpg,jpeg}',
+  { import: 'default', eager: true }
+)
 let gallery = folder
 if (gallery == '(default)') {
   gallery = Astro.url.pathname.split('/').reverse()[0]
 }
-const folderFiles = Object.keys(imageFiles).filter(image => image.search(gallery) >= 0)
+const folderFiles = Object.keys(imageFiles).filter(
+  (image) => image.search(gallery) >= 0
+)
 const exifs = [] as Record<string, any>[]
 for (let i in folderFiles) {
   const exif = await exifr.parse(folderFiles[i].replace('../', './src/'))
   exifs.push(exif)
 }
-const images = folderFiles.map((image, i) => {
-  return {
-    file: image,
-    title: image.slice(0, image.lastIndexOf('.')).slice(image.lastIndexOf('/') + 1),
-    image: imageFiles[image],
-    exif: exifs[i]
-  }
-}).sort((a, b) => {
-    return a.exif.CreateDate - b.exif.CreateDate;
-})
+const images = folderFiles
+  .map((image, i) => {
+    return {
+      file: image,
+      title: image
+        .slice(0, image.lastIndexOf('.'))
+        .slice(image.lastIndexOf('/') + 1),
+      image: imageFiles[image],
+      exif: exifs[i]
+    }
+  })
+  .sort((a, b) => {
+    return a.exif.CreateDate - b.exif.CreateDate
+  })
 
 const id = 'gallery-' + gallery
 ---
-<p class="text-sm text-neutral-500 italic sm:px-2 lg:px-4">Please click on any photo to view in a lightbox. Use arrow keys or swipe to navigate.</p>
-<div id={id} class="w-full block mx-auto columns-1 gap-2 lg:gap-4 mx-auto px-2 lg:px-4 sm:columns-2 lg:columns-3 not-prose" itemscope itemtype="http://schema.org/ImageGallery">
+
+<p class="text-sm text-neutral-500 italic sm:px-2 lg:px-4">
+  Please click on any photo to view in a lightbox. Use arrow keys or swipe to
+  navigate.
+</p>
+<div
+  id={id}
+  class="w-full block mx-auto columns-1 gap-2 lg:gap-4 mx-auto px-2 lg:px-4 sm:columns-2 lg:columns-3 not-prose"
+  itemscope
+  itemtype="http://schema.org/ImageGallery">
   <Lightbox id={id} images={images} />
 </div>

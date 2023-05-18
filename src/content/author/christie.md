@@ -2,6 +2,7 @@
 title: Chris Tham
 description: Founder and photographer
 image: ./christie.jpeg
+website: https://christham.net
 ---
 
 Chris Tham is a founder of Visual Voyager Pty Ltd, the Principal Voigtländer Ambassador for Mainline Photographics and a Workshop Instructor for Mainline Photo Academy.

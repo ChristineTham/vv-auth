@@ -2,7 +2,12 @@ import logo from './assets/Visual Voyager logo.svg'
 
 export const Settings = {
   site_name: 'Visual Voyager',
+  description: 'world travel and photography',
+  twitter: '@VisualVoyager',
+  email: 'info@visualvoyager.net',
+  location: 'Sydney, Australia',
   logo: logo,
+  locale: 'en-AU',
   timezone: 'Australia/Sydney',
   currency_symbol: '$',
   currency_code: 'AUD',

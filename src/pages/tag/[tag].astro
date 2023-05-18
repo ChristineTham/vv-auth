@@ -33,14 +33,25 @@ export interface Props {
 const { tag, posts } = Astro.props
 ---
 
-<Layout title={'Tag: ' + tag} description={'Tag: ' + tag}>
+<Layout
+  title={'Tag: ' + tag}
+  description={'Tag: ' + tag}
+  tags={[tag]}
+  schema="CollectionPage">
   <div class="relative h-96">
-    <Image src={Cover} alt={tag + 'cover'} class="w-full h-full object-cover" />
+    <Image
+      itemprop="image"
+      src={Cover}
+      alt={tag + 'cover'}
+      class="w-full h-full object-cover"
+    />
   </div>
 
   <div
     class="max-w-4xl mx-auto bg-white py-12 px-12 lg:px-24 -mt-32 relative z-10">
-    <h1 class="font-display font-bold text-5xl mb-6">Tag: {tag}</h1>
+    <h1 itemprop="name" class="font-display font-bold text-5xl mb-6">
+      Tag: {tag}
+    </h1>
   </div>
   <Posts posts={posts} />
 </Layout>

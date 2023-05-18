@@ -2,6 +2,7 @@
 layout: ../layouts/page.astro
 title: Privacy Policy
 description: Description of the information we collect on this site.
+schema: FAQPage
 ---
 
 As with many websites, we collect the e-mail addresses of those who communicate with us via e-mail, aggregate information on what pages consumers access or visit, and information volunteered by the user. The information we collect is used to improve the content of our web pages and the quality of our service and is never shared with or sold to other organizations for commercial purposes, except to provide products or services you’ve requested, when we have your permission, or if it is necessary to share information in order to investigate, prevent, or take action regarding illegal activities, suspected fraud, situations involving potential threats to the physical safety of any person, violations of our Terms of Service, or as otherwise required by law.

@@ -2,6 +2,7 @@
 layout: ../layouts/page.astro
 title: About Us
 description: null
+schema: AboutPage
 ---
 
 Visual Voyager is primarily focused on showcasing photos of the beautiful natural features, architecture, activities, people, plants and animals in various locations around the world.

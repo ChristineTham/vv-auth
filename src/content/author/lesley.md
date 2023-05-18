@@ -2,6 +2,7 @@
 title: Lesley Whyte
 description: Photographer and events facilitator
 image: ./Lesley.jpeg
+website: https://lesleywhytephotography.co.nz/
 ---
 
 A photography mentor for women running New Zealand’s only organisation providing photography workshops, networking events and tours for women.

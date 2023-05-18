@@ -12,7 +12,11 @@ const post = articles.sort((a, b) => +b.data.date - +a.data.date)[0]
 <div class="grid grid-cols-1 md:grid-cols-2">
   <div class="bg-white p-12 md:p-24 flex justify-end items-center">
     <a href={'/post/' + post.slug}>
-      <img src={post.data.image} alt={post.data.title} class="w-full max-w-md" />
+      <img
+        src={post.data.image}
+        alt={post.data.title}
+        class="w-full max-w-md"
+      />
       <span class="sr-only">Image</span>
     </a>
   </div>

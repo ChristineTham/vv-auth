@@ -5,20 +5,28 @@ interface Props {
   frontmatter: {
     title: string
     description: string
+    schema?: string
   }
 }
 
 const { frontmatter } = Astro.props
 ---
 
-<Layout title={frontmatter.title} description={frontmatter.description}>
+<Layout
+  title={frontmatter.title}
+  description={frontmatter.description}
+  schema={frontmatter.schema}>
   <div class="text-center py-12 px-6 mt-12">
-    <h1 class="font-display font-bold text-5xl mb-6">{frontmatter.title}</h1>
-    <p class="max-w-lg mx-auto italic">{frontmatter.description}</p>
+    <h1 class="font-display font-bold text-5xl mb-6" itemprop="name">
+      {frontmatter.title}
+    </h1>
+    <p class="max-w-lg mx-auto italic" itemprop="abstract description">
+      {frontmatter.description}
+    </p>
   </div>
 
   <div
     class="max-w-4xl prose prose-sm sm:prose lg:prose-lg mt-6 mx-auto pb-24 px-6">
-    <slot />
+    <slot itemprop="mainContentOfPage" />
   </div>
 </Layout>

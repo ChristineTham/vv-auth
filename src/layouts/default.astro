@@ -2,17 +2,31 @@
 import { Settings } from '../config'
 import Navbar from '../components/navbar.astro'
 import Footer from '../components/footer.astro'
+import Metadata from '../components/metadata.astro'
 
-interface Props {
+export interface Props {
+  author?: string
   title?: string
   description?: string
+  date?: Date
+  image?: ImageMetadata
+  tags?: string[]
+  schema?: string
 }
 
-const { title, description } = Astro.props
+const {
+  author,
+  title,
+  description,
+  date,
+  image,
+  tags,
+  schema = 'WebPage'
+} = Astro.props
 ---
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" itemscope itemtype={'https://Schema.org/' + schema}>
   <head>
     <meta charset="UTF-8" />
     <meta http-equiv="x-ua-compatible" content="ie=edge" />
@@ -27,12 +41,15 @@ const { title, description } = Astro.props
         display: none !important;
       }
     </style>
+    <Metadata {author} {title} {description} {date} {image} {tags} />
     <!-- <script is:inline src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script> -->
 
     <title>
       {title || Settings.site_name}
     </title>
     {description && <meta name="description" content={description} />}
+    {author && <meta name="author" content={author} />}
+    {tags && <meta name="keywords" content={tags.join(', ')} />}
   </head>
   <body class="font-sans text-gray-700 antialiased bg-white">
     <Navbar />
@@ -60,7 +77,6 @@ const { title, description } = Astro.props
 
         status!.innerHTML = `${window.netlifyUser.user_metadata.full_name}<br />(${window.netlifyUser.email})`
         manage!.innerText = 'Manage membership'
-
       }
       manage!.addEventListener('click', () => {
         if (!window.netlifyUser) {

@@ -12,30 +12,34 @@ export async function getStaticPaths() {
     (product) => product.metadata.type == 'event'
   )
 
-  return events.map((entry) => ({
-    params: { event: entry.id },
-    props: { entry }
+  return events.map((event) => ({
+    params: { event: event.id },
+    props: { event }
   }))
 }
 
 interface Props {
-  entry: Stripe.Product
+  event: Stripe.Product
 }
 
 // 2. When it's time to render, you can get the entry directly from the prop
-const { entry } = Astro.props
+const { event } = Astro.props
 
 const stripe = new Stripe(import.meta.env.STRIPE_SECRET_KEY, {
   apiVersion: '2022-11-15'
 })
-const price = await stripe.prices.retrieve(entry.default_price! as string)
+const price = await stripe.prices.retrieve(event.default_price! as string)
 ---
 
-<Layout title={entry.name} description={entry.description!}>
+<Layout title={event.name} description={event.description!} schema="Event">
   <div class="relative h-96 bg-neutral-300">
     {
-      entry.images && (
-        <img src={entry.images[0]} class="w-full h-full object-cover" />
+      event.images && (
+        <img
+          itemprop="image"
+          src={event.images[0]}
+          class="w-full h-full object-cover"
+        />
       )
     }
   </div>
@@ -46,12 +50,14 @@ const price = await stripe.prices.retrieve(entry.default_price! as string)
       {price.currency}${price.unit_amount! / 100.0}
       <span class="lowercase text-xs">(including tax where applicable)</span>
     </h2>
-    <h1 class="font-display text-2xl md:text-3xl text-gray-900 mt-4">
-      {entry.name}
+    <h1
+      itemprop="name"
+      class="font-display text-2xl md:text-3xl text-gray-900 mt-4">
+      {event.name}
     </h1>
 
     <div class="prose prose-sm sm:prose lg:prose-lg mt-6">
-      <p>{entry.description}</p>
+      <p itemprop="description">{event.description}</p>
       <button
         id="join"
         class="inline-flex items-center justify-center w-full px-4 py-4 mt-8 font-semibold text-white transition-all duration-200 rounded-md bg-gradient-to-r from-fuchsia-600 to-blue-600 hover:opacity-80 focus:opacity-80">
@@ -59,7 +65,7 @@ const price = await stripe.prices.retrieve(entry.default_price! as string)
       </button>
     </div>
   </div>
-  <script define:vars={{ price: entry.default_price }}>
+  <script define:vars={{ price: event.default_price }}>
     document.body.onload = function () {
       const join = document.getElementById('join')
 

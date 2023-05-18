@@ -30,9 +30,12 @@ const posts = articles
 
 <Layout
   title={category.data.plural || category.data.title}
-  description={category.data.description}>
+  description={category.data.description}
+  image={category.data.image}
+  schema="CollectionPage">
   <div class="relative h-96">
     <Image
+      itemprop="image"
       src={category.data.image}
       alt={category.data.title}
       class="w-full h-full object-cover"
@@ -41,12 +44,16 @@ const posts = articles
 
   <div
     class="max-w-4xl mx-auto bg-white py-12 px-12 lg:px-24 -mt-32 relative z-10">
-    <h1 class="font-display font-bold text-5xl mb-6">
+    <h1 itemprop="name" class="font-display font-bold text-5xl mb-6">
       {category.data.plural || category.data.title}
     </h1>
-    <p class="max-w-lg mx-auto">{category.data.description}</p>
+    <p itemprop="abstract description" class="max-w-lg mx-auto">
+      {category.data.description}
+    </p>
   </div>
-  <div class="prose prose-sm sm:prose lg:prose-lg mt-6">
+  <div
+    itemprop="mainContentOfPage"
+    class="prose prose-sm sm:prose lg:prose-lg mt-6">
     <Content />
   </div>
   <Posts posts={posts} />
