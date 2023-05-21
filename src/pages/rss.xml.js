@@ -26,13 +26,13 @@ export async function get() {
 ${sortedPosts
   .map(
     (post) => `    <item>
-      <title>${post.data.title}</title>
+      <title><![CDATA[${post.data.title}]]></title>
       <link>${new URL(
         '/post/' + post.slug,
         import.meta.env.SITE
       ).toString()}</link>
       <author>${post.data.author})</author>
-      <description>${post.data.description}</description>
+      <description><![CDATA[${post.data.description}]]></description>
       <pubDate>${post.data.date}</pubDate>
       <guid>${new URL(post.slug, import.meta.env.SITE).toString()}</guid>
     </item>`

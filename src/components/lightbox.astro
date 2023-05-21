@@ -75,7 +75,7 @@ const { id, images } = Astro.props
 </lightbox-inner>
 <script>
   import PhotoSwipeLightbox from 'photoswipe/lightbox'
-  import PhotoSwipe from 'photoswipe'
+  // import PhotoSwipe from 'photoswipe'
   import PhotoSwipeDynamicCaption from 'photoswipe-dynamic-caption-plugin'
 
   class LightboxInner extends HTMLElement {
@@ -88,7 +88,7 @@ const { id, images } = Astro.props
         mainClass: 'pswp--custom-icon-colors',
         gallerySelector: '#' + id,
         childSelector: 'a',
-        pswpModule: () => PhotoSwipe,
+        pswpModule: () => import('photoswipe'),
         paddingFn: () => {
           return {
             top: 0,

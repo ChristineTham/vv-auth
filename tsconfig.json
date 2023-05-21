@@ -1,14 +1,9 @@
 {
   "extends": "astro/tsconfigs/strict",
   "compilerOptions": {
-    "baseUrl": ".",
     "paths": {
-      "@assets/*": ["src/components/*"],
-      "@components/*": ["src/components/*"],
-      "@layouts/*": ["src/layouts/*"]
+      "photoswipe/lightbox": ["./node_modules/photoswipe/dist/types/lightbox/lightbox.d.ts"],
+      // "photoswipe": ["./node_modules/photoswipe/dist/types/photoswipe.d.ts"]
     }
-  },
-  "paths": {
-    "photoswipe/lightbox": ["./node_modules/photoswipe/dist/types/lightbox/lightbox.d.ts"]
   }
 }
