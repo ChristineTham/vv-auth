@@ -1,5 +1,5 @@
 ---
-author: Chris Tham
+author: christie
 title: Allan Bridge
 image: https://visualvoyager.net/wp-content/uploads/photo-of-the-day/allan-bridge.jpeg
 date: 2023-02-02T20:00:00.000+11:00

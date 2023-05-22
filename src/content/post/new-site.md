@@ -1,5 +1,5 @@
 ---
-author: Chris Tham
+author: christie
 title: New site redesign
 date: 2023-05-17T20:00:00.000+10:00
 description: 'We are pleased to launch a completely rewritten web site that is faster, better, and has more features!'

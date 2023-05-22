@@ -1,0 +1,34 @@
+---
+import type { CollectionEntry } from 'astro:content'
+import { getEntry } from 'astro:content'
+import { Image } from 'astro:assets'
+
+interface Props {
+  post: CollectionEntry<'post'>
+}
+
+const { post } = Astro.props
+const author = await getEntry(post.data.author)
+---
+<div class="mt-2 text-xs md:text-sm text-neutral-600 flex items-center">
+  <Image
+    src={author.data.image}
+    alt={author.data.title}
+    class="h-10 w-10 rounded-full mr-2 object-cover"
+  />
+  <div>
+    <div>{author.data.title}</div>      
+    {
+      post.data.date.toLocaleString('en-AU', {
+        dateStyle: 'long',
+        timeStyle: 'long',
+        timeZone: 'Australia/NSW'
+      })
+    }
+  </div>
+</div>
+{post.data.description && (
+  <p itemprop="abstract description" class="my-4 italic">
+    {post.data.description}
+  </p>
+)}

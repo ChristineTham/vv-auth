@@ -1,5 +1,5 @@
 ---
-author: Chris Tham
+author: christie
 title: 'Real Life Review: Voigtländer 75 mm/1:1.5 Nokton VM'
 date: 2019-08-26T09:00:49.000+10:00
 description: 'This is a Real Life Review of the new Voigtländer 75mm f1.5 VM-mount lens with Leica M10 and Sony A7r bodies.'

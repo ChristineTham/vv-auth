@@ -80,6 +80,7 @@ export default defineConfig({
     'i-fa6-brands-twitter',
     'i-fa6-solid-bullhorn',
     'i-fa6-solid-user-lock',
-    'i-fa6-solid-passport'
+    'i-fa6-solid-passport',
+    'i-fa6-solid-envelope'
   ]
 })

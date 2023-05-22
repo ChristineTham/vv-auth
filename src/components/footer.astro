@@ -1,5 +1,8 @@
 ---
+import { getCollection } from 'astro:content'
 import { Settings, FooterMenu, Copyright } from '../config'
+
+const social = await getCollection('social')
 ---
 
 <div
@@ -59,6 +62,17 @@ import { Settings, FooterMenu, Copyright } from '../config'
         </div>
       ))
     }
+    <div>
+      <div class="font-display text-white uppercase text-sm tracking-widest mb-6">
+        "Social Links"
+      </div>
+      {social.map((item) => (
+        <a href={item.data.url} class="block mb-4">
+          {item.data.icon && <span class:list={['w-6 h-6', item.data.icon]} />}
+          {item.data.name}
+        </a>
+      ))}
+    </div>
   </div>
   <div
     class="text-sm lg:text-base text-center font-heading font-light tracking-widest uppercase text-white opacity-75 pb-8">

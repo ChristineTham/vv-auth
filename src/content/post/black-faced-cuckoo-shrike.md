@@ -1,5 +1,5 @@
 ---
-author: Positivity
+author: positivity
 title: 'Black faced cuckoo shrike'
 date: 2023-05-10T20:00:00.000+10:00
 description: 'A cuckoo shrike is neither a cuckoo, nor a shrike.'

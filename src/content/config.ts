@@ -1,11 +1,11 @@
 // 1. Import utilities from `astro:content`
-import { z, defineCollection } from 'astro:content'
+import { z, defineCollection, reference } from 'astro:content'
 
 // 2. Define a schema for each collection you'd like to validate.
 const postCollection = defineCollection({
   schema: z.object({
     draft: z.boolean().optional(),
-    author: z.string(),
+    author: reference('author'),
     title: z.string(),
     date: z.date(),
     description: z.string(),
@@ -37,9 +37,19 @@ const authorCollection = defineCollection({
     })
 })
 
+const socialCollection = defineCollection({
+  type: 'data',
+  schema: z.object({
+    name: z.string(),
+    icon: z.string(),
+    url: z.string().url(),
+  })
+})
+
 // 3. Export a single `collections` object to register your collection(s)
 export const collections = {
   post: postCollection,
   category: categoryCollection,
-  author: authorCollection
+  author: authorCollection,
+  social: socialCollection,
 }

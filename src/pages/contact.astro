@@ -1,11 +1,12 @@
 ---
 export const prerender = true
+import { getCollection } from 'astro:content'
 import Layout from '../layouts/default.astro'
 
 const title = 'Contact Us'
 const description =
   'We are a Registered Australian Proprietary Company, regulated by the Australian Securities and Investment Commission (ABN 52 637 146 895).'
-const email = 'info@visualvoyager'
+const social = await getCollection('social')
 ---
 
 <Layout {title} {description} schema="ContactPage">
@@ -21,22 +22,12 @@ const email = 'info@visualvoyager'
   <div itemprop="mainContentOfPage" class="container mx-auto px-6 mb-12">
     <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 max-w-4xl mx-auto">
       <div>
-        <a href={`mailto:${email}`} class="flex items-center my-2">
-          <svg
-            class="w-4 h-4 mr-2"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-            xmlns="http://www.w3.org/2000/svg">
-            <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="1"
-              d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
-            ></path>
-          </svg>
-          {email}
-        </a>
+        {social.map(item => (
+          <a href={item.data.url} class="flex items-center my-2">
+            <span class:list={['h-6 w-6 mr-2', item.data.icon]} />
+            {item.data.name}
+          </a>
+        ))}
       </div>
 
       <div>

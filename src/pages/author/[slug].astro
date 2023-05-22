@@ -25,7 +25,7 @@ const { Content } = await author.render()
 
 const articles = await getCollection('post', ({ data }) => data.draft !== true)
 const posts = articles
-  .filter((post) => post.data.author == author.data.title)
+  .filter((post) => post.data.author.slug == author.slug)
   .sort((a, b) => +b.data.date - +a.data.date)
 ---
 

@@ -1,5 +1,5 @@
 ---
-author: Positivity
+author: positivity
 title: 'Real Life Review: Sony Alpha 1 camera'
 date: 2022-03-30T21:34:58.000+11:00
 description: "The Sony Alpha 1 is the first in a new line of Sony cameras. After using this camera for a year, I'm ready to summarise my experiences with it."

@@ -203,6 +203,13 @@ declare module 'astro:content' {
   collection: "author";
   data: InferEntrySchema<"author">
 } & { render(): Render[".md"] };
+"default.md": {
+	id: "default.md";
+  slug: "default";
+  body: string;
+  collection: "author";
+  data: InferEntrySchema<"author">
+} & { render(): Render[".md"] };
 "lesley.md": {
 	id: "lesley.md";
   slug: "lesley";
@@ -303,7 +310,29 @@ declare module 'astro:content' {
 	};
 
 	type DataEntryMap = {
-		
+		"social": {
+"email": {
+	id: "email";
+  collection: "social";
+  data: InferEntrySchema<"social">
+};
+"facebook": {
+	id: "facebook";
+  collection: "social";
+  data: InferEntrySchema<"social">
+};
+"instagram": {
+	id: "instagram";
+  collection: "social";
+  data: InferEntrySchema<"social">
+};
+"twitter": {
+	id: "twitter";
+  collection: "social";
+  data: InferEntrySchema<"social">
+};
+};
+
 	};
 
 	type AnyEntryMap = ContentEntryMap & DataEntryMap;

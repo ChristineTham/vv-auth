@@ -1,6 +1,8 @@
 ---
 import type { CollectionEntry } from 'astro:content'
+import { getEntry } from 'astro:content'
 import Layout from '../layouts/default.astro'
+import PostDetail from './postdetail.astro'
 import Gallery from './gallery.astro'
 import Map from './map.astro'
 
@@ -11,10 +13,12 @@ interface Props {
 const { post } = Astro.props
 
 const geomap = post.data.geo ? JSON.parse(post.data.geo) : null
+
+const author = await getEntry(post.data.author)
 ---
 
 <Layout
-  author={post.data.author}
+  author={author.data.title}
   title={post.data.title}
   description={post.data.description}
   date={post.data.date}
@@ -45,18 +49,7 @@ const geomap = post.data.geo ? JSON.parse(post.data.geo) : null
     <h1 class="font-display text-2xl md:text-3xl text-neutral-900 mt-4">
       {post.data.title}
     </h1>
-    <div class="mt-2 text-xs md:text-sm text-neutral-500">
-      <span class="h-4 w-4 i-fa6-solid-pen"></span>
-      {post.data.author}
-      <span class="ml-2 h-4 w-4 i-fa6-solid-clock"></span>
-      {
-        post.data.date.toLocaleString('en-AU', {
-          dateStyle: 'long',
-          timeStyle: 'long',
-          timeZone: 'Australia/NSW'
-        })
-      }
-    </div>
+    <PostDetail {post} />
     <div class="prose prose-sm sm:prose lg:prose-lg mt-6">
       <slot />
     </div>

@@ -1,5 +1,5 @@
 ---
-author: Chris Tham
+author: christie
 title: Member only post
 date: 2021-05-17T20:00:00.000+10:00
 description: 'Sample member-only post'

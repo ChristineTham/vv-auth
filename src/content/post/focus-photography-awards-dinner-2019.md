@@ -1,5 +1,5 @@
 ---
-author: Chris Tham
+author: christie
 title: 'Focus Photography Awards Dinner 2019'
 date: 2019-11-10T09:00:00.000+11:00
 description: 'The Focus Awards are held annually to celebrate the best talent in the Focus Photographers Group.'
